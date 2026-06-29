@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TicketBox.Application.Features.CQRS.Attendees.Handlers;
 using TicketBox.Application.Features.CQRS.Categories.Handlers;
+using TicketBox.Application.Features.Mediator.Events.Commands;
 using TicketBox.Application.Interfaces;
 using TicketBox.Application.Mappings;
 using TicketBox.Persistence.Context;
@@ -10,6 +11,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(typeof(CreateEventCommand).Assembly);
+});
+
 builder.Services.AddDbContext<TicketContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -17,6 +23,8 @@ builder.Services.AddAutoMapper(typeof(GeneralMappingProfile));
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IAttendeeRepository, AttendeeRepository>();
+builder.Services.AddScoped<IEventRepository, EventRepository>();
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 
 
 builder.Services.AddScoped<GetCategoryQueryHandler>();
