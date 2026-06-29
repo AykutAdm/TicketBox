@@ -1,0 +1,11 @@
+﻿@model CreateCategoryDto
+@{
+    Layout = null;
+}
+
+<form method="post">
+    <label>Kategori Adı</label>
+    <input type="text" asp-for="CategoryName" class="form-control" />
+    <br />
+    <button type="submit" class="btn btn-dark">Kaydet</button>
+</form>

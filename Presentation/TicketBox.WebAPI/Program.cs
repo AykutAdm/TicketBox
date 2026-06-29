@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TicketBox.Application.Features.CQRS.Attendees.Handlers;
 using TicketBox.Application.Features.CQRS.Categories.Handlers;
 using TicketBox.Application.Interfaces;
 using TicketBox.Application.Mappings;
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<TicketContext>(options =>
 builder.Services.AddAutoMapper(typeof(GeneralMappingProfile));
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IAttendeeRepository, AttendeeRepository>();
 
 
 builder.Services.AddScoped<GetCategoryQueryHandler>();
@@ -22,6 +24,12 @@ builder.Services.AddScoped<GetCategoryByIdQueryHandler>();
 builder.Services.AddScoped<CreateCategoryCommandHandler>();
 builder.Services.AddScoped<UpdateCategoryCommandHandler>();
 builder.Services.AddScoped<RemoveCategoryCommandHandler>();
+
+builder.Services.AddScoped<GetAttendeeQueryHandler>();
+builder.Services.AddScoped<GetAttendeeByIdQueryHandler>();
+builder.Services.AddScoped<CreateAttendeeCommandHandler>();
+builder.Services.AddScoped<UpdateAttendeeCommandHandler>();
+builder.Services.AddScoped<RemoveAttendeeCommandHandler>();
 
 
 builder.Services.AddControllers();

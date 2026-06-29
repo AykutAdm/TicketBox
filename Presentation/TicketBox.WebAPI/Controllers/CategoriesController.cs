@@ -46,7 +46,7 @@ namespace TicketBox.WebAPI.Controllers
             return Ok("Kategori Eklendi");
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> RemoveCategory(int id)
         {
             await _removeCategoryCommandHandler.Handle(new RemoveCategoryCommand(id));
