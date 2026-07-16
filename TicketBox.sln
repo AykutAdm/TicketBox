@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketBox.WebAPI", "Present
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketBox.WebUI", "Presentation\TicketBox.WebUI\TicketBox.WebUI.csproj", "{7C2015D9-B9A2-426D-8DC7-C0867BCF3E5E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketBox.Infrastructure", "Infrastructure\TicketBox.Infrastructure\TicketBox.Infrastructure.csproj", "{C161965F-8BF6-4723-B33F-7C285660793E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{7C2015D9-B9A2-426D-8DC7-C0867BCF3E5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C2015D9-B9A2-426D-8DC7-C0867BCF3E5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C2015D9-B9A2-426D-8DC7-C0867BCF3E5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C161965F-8BF6-4723-B33F-7C285660793E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C161965F-8BF6-4723-B33F-7C285660793E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C161965F-8BF6-4723-B33F-7C285660793E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C161965F-8BF6-4723-B33F-7C285660793E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{17C0609B-7D01-4C74-ACE1-4FD81DCC35A8} = {C9ABA3E3-A404-4BAD-A270-82C870CD9418}
 		{450767EA-C39F-4DDE-B39C-B238DA919BA3} = {3DFCBE13-54A3-4422-947F-33FF57B480B9}
 		{7C2015D9-B9A2-426D-8DC7-C0867BCF3E5E} = {3DFCBE13-54A3-4422-947F-33FF57B480B9}
+		{C161965F-8BF6-4723-B33F-7C285660793E} = {C9ABA3E3-A404-4BAD-A270-82C870CD9418}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3EF0B87A-0E93-48E6-9926-5D474E4F7790}

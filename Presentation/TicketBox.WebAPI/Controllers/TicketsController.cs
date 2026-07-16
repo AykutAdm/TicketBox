@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TicketBox.Application.Features.Mediator.Tickets.Commands;
 using TicketBox.Application.Features.Mediator.Tickets.Queries;
 
 namespace TicketBox.WebAPI.Controllers
@@ -19,7 +18,7 @@ namespace TicketBox.WebAPI.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> GetTicketList()
+        public async Task<IActionResult> GetAllTickets()
         {
             var result = await _mediator.Send(new GetTicketQuery());
             return Ok(result);
@@ -32,27 +31,11 @@ namespace TicketBox.WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateTicket(CreateTicketCommand command)
+        [HttpGet("my")]
+        public async Task<IActionResult> GetMyTickets([FromQuery] string appUserId)
         {
-            await _mediator.Send(command);
-            return Ok("Bilet eklendi.");
-        }
-
-
-        [HttpPut]
-        public async Task<IActionResult> UpdateTicket(UpdateTicketCommand command)
-        {
-            await _mediator.Send(command);
-            return Ok("Bilet güncellendi.");
-        }
-
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> RemoveTicket(int id)
-        {
-            await _mediator.Send(new RemoveTicketCommand(id));
-            return Ok("Bilet silindi.");
+            var result = await _mediator.Send(new GetMyTicketsQuery { AppUserId = appUserId });
+            return Ok(result);
         }
     }
 }

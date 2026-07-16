@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using TicketBox.Application.Features.CQRS.Categories.Commands;
-using TicketBox.Application.Interfaces;
+using TicketBox.Application.Interfaces.Repositories;
 using TicketBox.Domain.Entities;
 
 

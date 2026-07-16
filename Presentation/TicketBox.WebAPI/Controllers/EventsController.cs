@@ -18,7 +18,7 @@ namespace TicketBox.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetEventList()
+        public async Task<IActionResult> GetAllEvents()
         {
             var result = await _mediator.Send(new GetEventQuery());
             return Ok(result);

@@ -10,12 +10,10 @@ namespace TicketBox.Domain.Entities
     {
         public int TicketId { get; set; }
 
-        public int EventId { get; set; }
-        public Event Event { get; set; }
+        public int BookingId { get; set; }
+        public Booking Booking { get; set; }
 
-        public int AttendeeId { get; set; }
-        public Attendee Attendee { get; set; }
-
+        public string PNR { get; set; }
         public DateTime PurchaseDate { get; set; }
         public decimal Price { get; set; }
     }

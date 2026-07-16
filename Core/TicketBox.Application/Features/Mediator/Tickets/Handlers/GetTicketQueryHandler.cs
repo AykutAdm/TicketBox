@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TicketBox.Application.Features.Mediator.Tickets.Queries;
 using TicketBox.Application.Features.Mediator.Tickets.Results;
-using TicketBox.Application.Interfaces;
+using TicketBox.Application.Interfaces.Repositories;
 
 namespace TicketBox.Application.Features.Mediator.Tickets.Handlers
 {

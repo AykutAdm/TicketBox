@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TicketBox.Application.Interfaces;
+using TicketBox.Application.Interfaces.Repositories;
 using TicketBox.Domain.Entities;
 using TicketBox.Persistence.Context;
 
@@ -38,12 +38,32 @@ namespace TicketBox.Persistence.Repositories
 
         public async Task<List<Ticket>> GetAllAsync()
         {
-            return await _context.Tickets.Include(x => x.Attendee).Include(y => y.Event).ToListAsync();
+            return await _context.Tickets
+               .Include(x => x.Booking)
+                   .ThenInclude(b => b.AppUser)
+               .Include(x => x.Booking)
+                   .ThenInclude(b => b.Event)
+               .ToListAsync();
         }
 
         public async Task<Ticket> GetByIdAsync(int id)
         {
-            return await _context.Tickets.Include(x => x.Attendee).Include(y => y.Event).FirstOrDefaultAsync(z => z.TicketId == id);
+            return await _context.Tickets
+                .Include(x => x.Booking)
+                    .ThenInclude(b => b.AppUser)
+                .Include(x => x.Booking)
+                    .ThenInclude(b => b.Event)
+                .FirstOrDefaultAsync(z => z.TicketId == id);
+        }
+
+        public async Task<List<Ticket>> GetTicketsByUserIdAsync(string appUserId)
+        {
+            return await _context.Tickets
+                .Include(x => x.Booking)
+                    .ThenInclude(b => b.AppUser)
+                .Include(x => x.Booking)
+                    .ThenInclude(b => b.Event)
+                .Where(t => t.Booking.AppUserId == appUserId).ToListAsync();
         }
 
         public async Task UpdateAsync(Ticket ticket)

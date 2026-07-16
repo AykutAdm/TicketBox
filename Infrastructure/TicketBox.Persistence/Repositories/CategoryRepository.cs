@@ -1,10 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TicketBox.Application.Interfaces;
+using TicketBox.Application.Interfaces.Repositories;
 using TicketBox.Domain.Entities;
 using TicketBox.Persistence.Context;
 
