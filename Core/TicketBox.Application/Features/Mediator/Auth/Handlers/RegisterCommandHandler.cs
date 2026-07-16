@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -13,14 +14,23 @@ namespace TicketBox.Application.Features.Mediator.Auth.Handlers
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, bool>
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly IValidator<RegisterCommand> _validator;
 
-        public RegisterCommandHandler(UserManager<AppUser> userManager)
+        public RegisterCommandHandler(UserManager<AppUser> userManager, IValidator<RegisterCommand> validator)
         {
             _userManager = userManager;
+            _validator = validator;
         }
 
         public async Task<bool> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
+            var validationResult = await _validator.ValidateAsync(request, cancellationToken);
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
+
+
             var user = new AppUser
             {
                 FirstName = request.FirstName,

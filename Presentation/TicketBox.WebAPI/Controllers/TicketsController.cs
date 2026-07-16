@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TicketBox.Application.Features.Mediator.Tickets.Queries;
 
 namespace TicketBox.WebAPI.Controllers
@@ -32,8 +33,9 @@ namespace TicketBox.WebAPI.Controllers
         }
 
         [HttpGet("my")]
-        public async Task<IActionResult> GetMyTickets([FromQuery] string appUserId)
+        public async Task<IActionResult> GetMyTickets()
         {
+            var appUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var result = await _mediator.Send(new GetMyTicketsQuery { AppUserId = appUserId });
             return Ok(result);
         }

@@ -1,3 +1,5 @@
+using FluentValidation;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +14,7 @@ using TicketBox.Domain.Entities;
 using TicketBox.Infrastructure.Auth;
 using TicketBox.Persistence.Context;
 using TicketBox.Persistence.Repositories;
+using TicketBox.WebAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,6 +58,11 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(CreateEventCommand).Assembly);
 });
 
+
+//Validation
+builder.Services.AddValidatorsFromAssembly(typeof(CreateEventCommand).Assembly);
+
+
 builder.Services.AddDbContext<TicketContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -86,6 +94,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -1,3 +1,4 @@
+using FluentValidation;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -15,17 +16,26 @@ namespace TicketBox.Application.Features.Mediator.Bookings.Handlers
         private readonly IEventRepository _eventRepository;
         private readonly IBookingRepository _bookingRepository;
         private readonly ITicketRepository _ticketRepository;
+        private readonly IValidator<CreateBookingCommand> _validator;
 
-        public CreateBookingCommandHandler(IEventRepository eventRepository, IBookingRepository bookingRepository, ITicketRepository ticketRepository)
+        public CreateBookingCommandHandler(IEventRepository eventRepository, IBookingRepository bookingRepository, ITicketRepository ticketRepository, IValidator<CreateBookingCommand> validator)
         {
             _eventRepository = eventRepository;
             _bookingRepository = bookingRepository;
             _ticketRepository = ticketRepository;
+            _validator = validator;
         }
 
         public async Task<int> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
         {
-            // 1. Event var mý kontrol et
+            var validationResult = await _validator.ValidateAsync(request, cancellationToken);
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
+
+
+            //Event var mý
             var eventEntity = await _eventRepository.GetByIdAsync(request.EventId);
             if (eventEntity == null)
             {
@@ -33,7 +43,7 @@ namespace TicketBox.Application.Features.Mediator.Bookings.Handlers
             }
 
 
-            // 2. Kontenjan yeterli mi kontrol et
+            //Kontenjan yeterli mi
             if (eventEntity.Capacity < request.Quantity)
             {
                 throw new Exception("Yetersiz kontenjan");
@@ -52,11 +62,11 @@ namespace TicketBox.Application.Features.Mediator.Bookings.Handlers
             await _bookingRepository.CreateAsync(booking);
 
 
-            // 4. Event'in kalan kapasitesini düþür
+            //Event'in kalan kapasitesini düþür
             eventEntity.Capacity -= request.Quantity;
             await _eventRepository.UpdateAsync(eventEntity);
 
-            // 5. Quantity kadar Ticket üret, her birine PNR bas
+            //Quantity kadar Ticket üret
             for (int i = 0; i < request.Quantity; i++)
             {
                 var ticket = new Ticket
