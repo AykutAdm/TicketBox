@@ -1,0 +1,112 @@
+﻿@model LoginDto
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap — TicketBox</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/variables.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/base.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/components.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/auth.css" asp-append-version="true">
+</head>
+<body class="auth-page">
+
+    <div class="stage-bg">
+        <canvas id="bg-canvas"></canvas>
+    </div>
+    <div class="scrim"></div>
+    <div class="grain"></div>
+
+    <div class="auth-shell">
+        <aside class="auth-showcase" aria-hidden="true">
+            <a href="/Default/Index" class="logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z" /><path d="M13 6v12" stroke-dasharray="2 3" /></svg>
+                TicketBox
+            </a>
+            <h1>Etkinliğe <em>tek tık</em> uzaktasın</h1>
+            <p>Favori konserlerini, festivallerini ve tiyatro gösterilerini keşfet — biletini güvenle al.</p>
+            <div class="auth-features">
+                <div class="auth-feature">
+                    <div class="auth-feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" /></svg>
+                    </div>
+                    <div>
+                        <strong>Güvenli ödeme</strong>
+                        <span>256-bit SSL ile korunan altyapı</span>
+                    </div>
+                </div>
+                <div class="auth-feature">
+                    <div class="auth-feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" /><path d="M12 18h.01" /></svg>
+                    </div>
+                    <div>
+                        <strong>Anında dijital bilet</strong>
+                        <span>QR kodun e-postana saniyeler içinde gelsin</span>
+                    </div>
+                </div>
+                <div class="auth-feature">
+                    <div class="auth-feature-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><path d="M22 4 12 14.01l-3-3" /></svg>
+                    </div>
+                    <div>
+                        <strong>Kolay iptal</strong>
+                        <span>Seçili etkinliklerde ücretsiz iptal hakkı</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="auth-main">
+            <a href="/Default/Index" class="auth-back">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
+                Ana Sayfa
+            </a>
+
+            <div class="auth-card">
+                <a href="/Default/Index" class="auth-mobile-logo">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z" /></svg>
+                    TicketBox
+                </a>
+
+                <h2>Tekrar hoş geldin</h2>
+                <p class="sub">Hesabına giriş yap ve biletlerini yönet.</p>
+
+                <form method="post">
+                    <div class="field">
+                        <label for="email">E-posta</label>
+                        <input id="email" asp-for="Email" type="email" placeholder="ornek@email.com" autocomplete="email" required>
+                    </div>
+                    <div class="field">
+                        <label for="password">Şifre</label>
+                        <input id="password" asp-for="Password" type="password" placeholder="••••••••" autocomplete="current-password" required>
+                    </div>
+                    <div class="auth-row">
+                        <label class="auth-check">
+                            <input type="checkbox" name="remember">
+                            Beni hatırla
+                        </label>
+                        <a href="#" class="auth-forgot">Şifremi unuttum</a>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block btn-lg">Giriş Yap</button>
+                </form>
+
+                <div class="divider">veya</div>
+
+
+                <p class="auth-switch">Hesabın yok mu? <a href="/Auth/Register">Kayıt ol</a></p>
+            </div>
+        </main>
+    </div>
+
+    <script src="~/js/background.js" asp-append-version="true"></script>
+</body>
+</html>

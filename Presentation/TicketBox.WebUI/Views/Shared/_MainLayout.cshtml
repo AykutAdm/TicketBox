@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] — TicketBox</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/variables.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/base.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/components.css" asp-append-version="true">
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+<body>
+
+    <div class="stage-bg">
+        <canvas id="bg-canvas"></canvas>
+    </div>
+    <div class="scrim"></div>
+    <div class="grain"></div>
+
+    <header>
+        <nav>
+            <a href="/Default/Index" class="logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z" /><path d="M13 6v12" stroke-dasharray="2 3" /></svg>
+                TicketBox
+            </a>
+
+
+
+            <ul class="nav-links">
+                <li><a href="/Default/Index" class="active">Ana Sayfa</a></li>
+                <li><a href="#">Etkinlikler</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="/Auth/Login" class="btn btn-ghost">Giriş Yap</a>
+                <a href="/Auth/Register" class="btn btn-primary">Kayıt Ol</a>
+            </div>
+
+            <button class="nav-toggle" aria-label="Menü">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18" /></svg>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="logo">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z" /></svg>
+                        TicketBox
+                    </div>
+                    <p>Türkiye'nin en sevdiği etkinlikleri keşfet, biletini saniyeler içinde al.</p>
+                </div>
+                <div>
+                    <h4>Keşfet</h4>
+                    <ul>
+                        <li><a href="#">Etkinlikler</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Hesap</h4>
+                    <ul>
+                        <li><a href="/Auth/Login">Giriş Yap</a></li>
+                        <li><a href="/Auth/Register">Kayıt Ol</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Şirket</h4>
+                    <ul>
+                        <li><a href="#">Hakkımızda</a></li>
+                        <li><a href="#">İletişim</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; @DateTime.Now.Year TicketBox. Tüm hakları saklıdır.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/background.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,408 @@
+/* ===== Home page — transparent glass over animated background ===== */
+
+main {
+    position: relative;
+    z-index: 3;
+}
+
+.home {
+    padding-bottom: 40px;
+}
+
+/* ----- Hero slider (glass frame) ----- */
+
+.home .slider {
+    height: min(78vh, 680px);
+    margin-top: 12px;
+    border: 1px solid rgba(255, 255, 255, .14);
+    background: rgba(8, 8, 13, .12);
+    backdrop-filter: blur(8px) saturate(150%);
+    -webkit-backdrop-filter: blur(8px) saturate(150%);
+    box-shadow: 0 24px 60px -20px rgba(0, 0, 0, .35);
+}
+
+.home .slide::after {
+    background: linear-gradient(
+        0deg,
+        rgba(11, 11, 18, .72) 0%,
+        rgba(11, 11, 18, .18) 45%,
+        rgba(11, 11, 18, .04) 100%
+    );
+}
+
+.home .slide-copy p {
+    color: var(--text-on-glass-muted);
+}
+
+.home .slide-copy h1 {
+    color: var(--text-on-glass);
+    text-shadow: 0 2px 24px rgba(0, 0, 0, .6);
+}
+
+.home .slider-arrow {
+    border: 1px solid rgba(255, 255, 255, .16);
+    background: rgba(8, 8, 13, .45);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* ----- Glass panels ----- */
+
+.glass-panel {
+    background: rgba(8, 8, 13, .3);
+    border: 1px solid rgba(255, 255, 255, .13);
+    backdrop-filter: blur(22px) saturate(170%);
+    -webkit-backdrop-filter: blur(22px) saturate(170%);
+    box-shadow: 0 16px 48px -16px rgba(0, 0, 0, .28), inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+
+.glass-panel--soft {
+    background: rgba(8, 8, 13, .16);
+}
+
+/* ----- Search strip ----- */
+
+.home-search {
+    margin-top: -36px;
+    position: relative;
+    z-index: 5;
+    padding: 10px;
+    border-radius: 22px;
+    box-shadow: var(--card-glow), inset 0 1px 0 rgba(255, 255, 255, .07);
+}
+
+.home-search .search-pill {
+    padding: 4px;
+}
+
+.home .search-field label {
+    color: var(--text-on-glass-subtle);
+    font-weight: 600;
+}
+
+.home .search-field input,
+.home .search-field select {
+    color: var(--text-on-glass);
+}
+
+.home .search-field input::placeholder {
+    color: var(--text-on-glass-subtle);
+}
+
+/* ----- Stats strip ----- */
+
+.stats-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 56px;
+    padding: 28px 32px;
+    border-radius: var(--r-lg);
+    box-shadow: var(--card-glow), inset 0 1px 0 rgba(255, 255, 255, .06);
+}
+
+.stat-item {
+    text-align: center;
+    padding: 8px 12px;
+}
+
+.stat-item b {
+    display: block;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 1.75rem;
+    letter-spacing: -.02em;
+    background: linear-gradient(100deg, var(--violet-2), var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.stat-item span {
+    display: block;
+    margin-top: 4px;
+    font-size: .84rem;
+    color: var(--text-on-glass-muted);
+    font-weight: 500;
+}
+
+/* ----- Sections ----- */
+
+.home-section {
+    margin-top: 72px;
+}
+
+.home .section-head h2 {
+    color: var(--text-on-glass);
+    text-shadow: 0 2px 20px rgba(0, 0, 0, .45);
+}
+
+.home .section-head p {
+    color: var(--text-on-glass-muted);
+}
+
+.home-section--tight {
+    margin-top: 48px;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: clamp(16px, 2vw, 28px);
+}
+
+.card-grid--3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* ----- Glass ticket cards ----- */
+
+.home .ticket {
+    position: relative;
+    background: rgba(6, 6, 14, .55);
+    border: 1px solid rgba(255, 255, 255, .14);
+    backdrop-filter: blur(20px) saturate(170%);
+    -webkit-backdrop-filter: blur(20px) saturate(170%);
+    box-shadow: var(--card-glow), inset 0 1px 0 rgba(255, 255, 255, .08);
+    transition: transform .6s var(--ease), opacity .6s var(--ease), border-color var(--fast) var(--ease), box-shadow var(--med) var(--ease), background var(--fast) var(--ease);
+}
+
+    .home .ticket::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: radial-gradient(ellipse 90% 55% at 50% 0%, rgba(124, 92, 255, .14) 0%, transparent 58%);
+        opacity: .85;
+        z-index: 0;
+        transition: opacity var(--med) var(--ease);
+    }
+
+.home .ticket:hover {
+    background: rgba(6, 6, 14, .68);
+    border-color: rgba(124, 92, 255, .45);
+    box-shadow: var(--card-glow-hover), inset 0 1px 0 rgba(255, 255, 255, .1);
+}
+
+    .home .ticket:hover::before {
+        opacity: 1;
+        background: radial-gradient(ellipse 90% 55% at 50% 0%, rgba(124, 92, 255, .22) 0%, rgba(59, 130, 246, .08) 40%, transparent 65%);
+    }
+
+.home .ticket-poster,
+.home .tear-line,
+.home .ticket-body {
+    position: relative;
+    z-index: 1;
+}
+
+.home .ticket-poster::before {
+    background: linear-gradient(180deg, rgba(11, 11, 18, .08) 0%, rgba(11, 11, 18, .62) 100%);
+}
+
+.home .ticket-body {
+    background: linear-gradient(180deg, rgba(6, 6, 14, .72) 0%, rgba(6, 6, 14, .88) 100%);
+}
+
+    .home .ticket-body h3 {
+        color: var(--text-on-glass);
+    }
+
+        .home .ticket-body h3 a {
+            color: inherit;
+        }
+
+.home .tear-line::before,
+.home .tear-line::after {
+    display: none;
+}
+
+.home .tear-line {
+    margin: 0 22px;
+    border-top-color: rgba(255, 255, 255, .1);
+}
+
+.home .ticket-footer {
+    border-top-color: rgba(255, 255, 255, .1);
+}
+
+.home .buy-btn {
+    background: rgba(255, 255, 255, .08);
+    border-color: rgba(255, 255, 255, .16);
+    color: var(--text-on-glass);
+}
+
+.home .meta-row {
+    color: var(--text-on-glass-muted);
+}
+
+    .home .meta-row svg {
+        color: var(--text-on-glass-subtle);
+    }
+
+.home .price small {
+    color: var(--text-on-glass-subtle);
+}
+
+.home .badge,
+.home .capacity {
+    background: rgba(6, 6, 14, .72);
+    color: var(--text-on-glass-muted);
+    border: 1px solid rgba(255, 255, 255, .1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* ----- Category chips on home ----- */
+
+.home .chip {
+    background: rgba(6, 6, 14, .5);
+    border-color: rgba(255, 255, 255, .14);
+    color: var(--text-on-glass-muted);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 0 20px -8px rgba(59, 130, 246, .15);
+}
+
+.home .chip:hover {
+    background: rgba(124, 92, 255, .18);
+    color: var(--text-on-glass);
+    border-color: rgba(124, 92, 255, .4);
+    box-shadow: 0 0 24px -6px rgba(124, 92, 255, .25);
+}
+
+/* ----- Promo banner ----- */
+
+.promo-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    margin-top: 72px;
+    padding: 40px 48px;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--card-glow), inset 0 1px 0 rgba(255, 255, 255, .07);
+}
+
+.promo-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 100% 50%, rgba(124, 92, 255, .15) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.promo-copy {
+    position: relative;
+    z-index: 1;
+    max-width: 52ch;
+}
+
+.promo-copy h2 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    letter-spacing: -.02em;
+    line-height: 1.15;
+    color: var(--text-on-glass);
+    text-shadow: 0 2px 20px rgba(0, 0, 0, .4);
+}
+
+.promo-copy p {
+    margin-top: 10px;
+    color: var(--text-on-glass-muted);
+    font-size: .94rem;
+    line-height: 1.6;
+}
+
+.promo-actions {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+/* ----- Trust badges ----- */
+
+.trust-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 28px;
+    margin-top: 48px;
+    padding: 20px 24px;
+    border-radius: var(--r-pill);
+    box-shadow: var(--card-glow), inset 0 1px 0 rgba(255, 255, 255, .05);
+}
+
+.trust-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: .84rem;
+    font-weight: 500;
+    color: var(--text-on-glass-muted);
+}
+
+.trust-item svg {
+    width: 18px;
+    height: 18px;
+    color: var(--teal);
+    flex-shrink: 0;
+}
+
+/* ----- Responsive ----- */
+
+@media (max-width: 960px) {
+    .card-grid,
+    .card-grid--3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-strip {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .promo-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 32px;
+    }
+
+    .promo-actions {
+        width: 100%;
+    }
+
+        .promo-actions .btn {
+            flex: 1;
+        }
+}
+
+@media (max-width: 640px) {
+    .home-search {
+        margin-top: -20px;
+    }
+
+    .stats-strip {
+        grid-template-columns: 1fr 1fr;
+        padding: 20px;
+        gap: 12px;
+    }
+
+    .stat-item b {
+        font-size: 1.4rem;
+    }
+
+    .home-section {
+        margin-top: 52px;
+    }
+
+    .trust-row {
+        gap: 16px;
+    }
+}

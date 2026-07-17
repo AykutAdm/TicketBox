@@ -1,0 +1,51 @@
+:root {
+    /* ===== Color ===== */
+    --ink: #0B0B12;
+    --ink-2: #0E0D16;
+    --surface: #15151F;
+    --surface-2: #1C1C29;
+    --surface-3: #22222F;
+    --border: #28273A;
+    --border-soft: rgba(255,255,255,.08);
+    --violet: #7C5CFF;
+    --violet-2: #B98CFF;
+    --violet-deep: #5A3FE0;
+    --gold: #F0B429;
+    --gold-soft: #FFDE8A;
+    --teal: #2DD4BF;
+    --mist: #F2EFFB;
+    --muted: #A8A3BC;
+    --muted-2: #7A758E;
+    --text-nav: rgba(242,239,251,.88);
+    --text-nav-hover: #F2EFFB;
+    --text-footer: rgba(242,239,251,.78);
+    --text-footer-heading: rgba(242,239,251,.62);
+    --text-on-glass: #F2EFFB;
+    --text-on-glass-muted: rgba(242,239,251,.82);
+    --text-on-glass-subtle: rgba(242,239,251,.65);
+    --card-glow: 0 0 28px -6px rgba(59,130,246,.22), 0 8px 32px -8px rgba(0,0,0,.4);
+    --card-glow-hover: 0 0 48px -4px rgba(124,92,255,.35), 0 0 80px -12px rgba(59,130,246,.25), 0 20px 50px -12px rgba(0,0,0,.45);
+    /* ===== Type ===== */
+    --display: 'Bricolage Grotesque', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'Space Mono', monospace;
+    /* ===== Radii ===== */
+    --r-lg: 26px;
+    --r-md: 18px;
+    --r-sm: 10px;
+    --r-pill: 999px;
+    /* ===== Motion ===== */
+    --ease: cubic-bezier(.16,.84,.44,1);
+    --fast: .22s;
+    --med: .4s;
+    /* ===== Glass ===== */
+    --glass-bg: rgba(12,12,18,.68);
+    --glass-bg-strong: rgba(8,8,13,.82);
+    --glass-border: rgba(255,255,255,.12);
+    --glass-blur: 28px;
+    --nav-shadow: 0 12px 40px -8px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.04) inset;
+    --footer-shadow: 0 -8px 40px -12px rgba(0,0,0,.4);
+    /* ===== Layout ===== */
+    --page-max: 1680px;
+    --page-gutter: clamp(20px, 2.5vw, 40px);
+}

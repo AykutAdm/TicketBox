@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TicketBox.Application.Specifications;
 using TicketBox.Domain.Entities;
 
 namespace TicketBox.Application.Interfaces.Repositories
@@ -14,5 +15,7 @@ namespace TicketBox.Application.Interfaces.Repositories
         Task CreateAsync(Event events);
         Task UpdateAsync(Event events);
         Task DeleteAsync(int id);
+
+        Task<List<Event>> SearchAsync(ISpecification<Event> spec);
     }
 }

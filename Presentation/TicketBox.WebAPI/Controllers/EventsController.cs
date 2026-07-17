@@ -53,5 +53,18 @@ namespace TicketBox.WebAPI.Controllers
             await _mediator.Send(new RemoveEventCommand(id));
             return Ok("Etkinlik silindi.");
         }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> Search([FromQuery] int? categoryId, [FromQuery] string? title, [FromQuery] decimal? minPrice, [FromQuery] decimal? maxPrice)
+        {
+            var result = await _mediator.Send(new SearchEventsQuery
+            {
+                CategoryId = categoryId,
+                Title = title,
+                MinPrice = minPrice,
+                MaxPrice = maxPrice
+            });
+            return Ok(result);
+        }
     }
 }

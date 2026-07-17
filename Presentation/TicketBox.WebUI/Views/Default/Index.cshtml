@@ -1,0 +1,377 @@
+﻿@{
+    ViewData["Title"] = "Ana Sayfa";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+}
+
+<div class="home">
+    <div class="container">
+
+        <!-- Hero Slider -->
+        <section class="hero" aria-label="Öne çıkan etkinlikler">
+            <div class="slider">
+                <div class="slide active">
+                    <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=1600&q=80&auto=format&fit=crop" alt="Canlı konser sahnesi" loading="eager">
+                    <div class="slide-copy">
+                        <span class="eyebrow">Bu Hafta</span>
+                        <h1>Sahne <em>senin</em> olsun</h1>
+                        <p>Türkiye'nin en iyi konser, festival ve tiyatro etkinliklerini keşfet. Biletini saniyeler içinde güvenle al.</p>
+                        <div class="cta-row">
+                            <a href="#" class="btn btn-primary btn-lg">Etkinlikleri Keşfet</a>
+                            <a href="#" class="btn btn-ghost btn-lg">Nasıl Çalışır?</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="https://images.unsplash.com/photo-1459749411175-04bf6032d964?w=1600&q=80&auto=format&fit=crop" alt="Festival kalabalığı" loading="lazy">
+                    <div class="slide-copy">
+                        <span class="eyebrow">Festival Sezonu</span>
+                        <h1>Yaz <em>ritmini</em> yakala</h1>
+                        <p>Açık hava festivallerinden elektronik müziğe — en popüler etkinlikler tek platformda.</p>
+                        <div class="cta-row">
+                            <a href="#" class="btn btn-primary btn-lg">Festival Biletleri</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <img src="https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?w=1600&q=80&auto=format&fit=crop" alt="Tiyatro sahnesi" loading="lazy">
+                    <div class="slide-copy">
+                        <span class="eyebrow">Sahne Sanatları</span>
+                        <h1>Kültür <em>her</em> köşede</h1>
+                        <p>Tiyatro, stand-up ve özel gösteriler — şehrindeki en seçkin etkinliklere anında ulaş.</p>
+                        <div class="cta-row">
+                            <a href="#" class="btn btn-primary btn-lg">Tiyatro &amp; Gösteri</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-controls">
+                    <div class="slider-dots"></div>
+                    <div class="slider-arrows">
+                        <button class="slider-arrow slider-arrow--prev glass" aria-label="Önceki slayt">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                        </button>
+                        <button class="slider-arrow slider-arrow--next glass" aria-label="Sonraki slayt">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search -->
+        <section class="home-search glass-panel" aria-label="Etkinlik ara">
+            <form class="search-pill" action="#" method="get">
+                <div class="search-field">
+                    <label for="q">Etkinlik veya sanatçı</label>
+                    <input id="q" name="q" type="text" placeholder="Konser, festival, tiyatro…">
+                </div>
+                <div class="search-field">
+                    <label for="city">Şehir</label>
+                    <select id="city" name="city">
+                        <option value="">Tüm şehirler</option>
+                        <option value="istanbul">İstanbul</option>
+                        <option value="ankara">Ankara</option>
+                        <option value="izmir">İzmir</option>
+                        <option value="antalya">Antalya</option>
+                    </select>
+                </div>
+                <div class="search-field">
+                    <label for="date">Tarih</label>
+                    <input id="date" name="date" type="date">
+                </div>
+                <button type="submit" class="search-submit" aria-label="Ara">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                </button>
+            </form>
+        </section>
+
+        <!-- Stats -->
+        <section class="stats-strip glass-panel glass-panel--soft" aria-label="Platform istatistikleri">
+            <div class="stat-item">
+                <b>2.400+</b>
+                <span>Aktif Etkinlik</span>
+            </div>
+            <div class="stat-item">
+                <b>180K</b>
+                <span>Mutlu Katılımcı</span>
+            </div>
+            <div class="stat-item">
+                <b>34</b>
+                <span>Şehir</span>
+            </div>
+            <div class="stat-item">
+                <b>4.9</b>
+                <span>Kullanıcı Puanı</span>
+            </div>
+        </section>
+
+        <!-- Categories -->
+        <section class="home-section home-section--tight" aria-label="Kategoriler">
+            <div class="chip-row">
+                <button type="button" class="chip active">Tümü</button>
+                <button type="button" class="chip">Konser</button>
+                <button type="button" class="chip">Festival</button>
+                <button type="button" class="chip">Tiyatro</button>
+                <button type="button" class="chip">Stand-Up</button>
+                <button type="button" class="chip">Spor</button>
+                <button type="button" class="chip">Çocuk</button>
+            </div>
+        </section>
+
+        <!-- Featured Events -->
+        <section class="home-section" aria-labelledby="featured-heading">
+            <div class="section-head">
+                <div>
+                    <h2 id="featured-heading">Öne Çıkan Etkinlikler</h2>
+                    <p>En çok ilgi gören etkinlikler — kaçırmadan yerini ayırt.</p>
+                </div>
+                <a href="#">Tümünü Gör →</a>
+            </div>
+            <div class="card-grid">
+                <article class="ticket">
+                    <div class="ticket-poster">
+                        <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&q=80&auto=format&fit=crop" alt="Rock Konseri Gecesi" loading="lazy">
+                        <div class="poster-tags">
+                            <span class="badge">Konser</span>
+                            <span class="capacity">%78 dolu</span>
+                        </div>
+                    </div>
+                    <div class="tear-line"></div>
+                    <div class="ticket-body">
+                        <h3><a href="#">Rock Konseri Gecesi</a></h3>
+                        <div class="meta-row">
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                                24 Tem 2026 · 21:00
+                            </span>
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Zorlu PSM, İstanbul
+                            </span>
+                        </div>
+                        <div class="ticket-footer">
+                            <div class="price">450₺ <small>'den başlayan</small></div>
+                            <button type="button" class="buy-btn">Bilet Al</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="ticket">
+                    <div class="ticket-poster">
+                        <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ecd7f6d?w=600&q=80&auto=format&fit=crop" alt="Yaz Festivali 2026" loading="lazy">
+                        <div class="poster-tags">
+                            <span class="badge">Festival</span>
+                            <span class="capacity">%92 dolu</span>
+                        </div>
+                    </div>
+                    <div class="tear-line"></div>
+                    <div class="ticket-body">
+                        <h3><a href="#">Yaz Festivali 2026</a></h3>
+                        <div class="meta-row">
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                                2–4 Ağu 2026
+                            </span>
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Life Park, İzmir
+                            </span>
+                        </div>
+                        <div class="ticket-footer">
+                            <div class="price">890₺ <small>'den başlayan</small></div>
+                            <button type="button" class="buy-btn">Bilet Al</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="ticket">
+                    <div class="ticket-poster">
+                        <img src="https://images.unsplash.com/photo-1503099220945-801598272da0?w=600&q=80&auto=format&fit=crop" alt="Hamlet — Modern Yorum" loading="lazy">
+                        <div class="poster-tags">
+                            <span class="badge">Tiyatro</span>
+                            <span class="capacity">%45 dolu</span>
+                        </div>
+                    </div>
+                    <div class="tear-line"></div>
+                    <div class="ticket-body">
+                        <h3><a href="#">Hamlet — Modern Yorum</a></h3>
+                        <div class="meta-row">
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                                15 Tem 2026 · 20:30
+                            </span>
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Devlet Tiyatrosu, Ankara
+                            </span>
+                        </div>
+                        <div class="ticket-footer">
+                            <div class="price">320₺ <small>'den başlayan</small></div>
+                            <button type="button" class="buy-btn">Bilet Al</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="ticket">
+                    <div class="ticket-poster">
+                        <img src="https://images.unsplash.com/photo-1585699322871-f985a13481ba?w=600&q=80&auto=format&fit=crop" alt="Stand-Up Gecesi" loading="lazy">
+                        <div class="poster-tags">
+                            <span class="badge">Stand-Up</span>
+                            <span class="capacity">%61 dolu</span>
+                        </div>
+                    </div>
+                    <div class="tear-line"></div>
+                    <div class="ticket-body">
+                        <h3><a href="#">Stand-Up Gecesi</a></h3>
+                        <div class="meta-row">
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                                19 Tem 2026 · 22:00
+                            </span>
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                                BKM Mutfak, İstanbul
+                            </span>
+                        </div>
+                        <div class="ticket-footer">
+                            <div class="price">280₺ <small>'den başlayan</small></div>
+                            <button type="button" class="buy-btn">Bilet Al</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Popular This Week -->
+        <section class="home-section" aria-labelledby="popular-heading">
+            <div class="section-head">
+                <div>
+                    <h2 id="popular-heading">Bu Hafta Popüler</h2>
+                    <p>Herkesin konuştuğu etkinlikler — son koltuklar tükenmeden.</p>
+                </div>
+                <a href="#">Tümünü Gör →</a>
+            </div>
+            <div class="card-grid card-grid--3">
+                <article class="ticket">
+                    <div class="ticket-poster">
+                        <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&q=80&auto=format&fit=crop" alt="Elektronik Gece" loading="lazy">
+                        <div class="poster-tags">
+                            <span class="badge">Elektronik</span>
+                            <span class="capacity">%88 dolu</span>
+                        </div>
+                    </div>
+                    <div class="tear-line"></div>
+                    <div class="ticket-body">
+                        <h3><a href="#">Elektronik Gece</a></h3>
+                        <div class="meta-row">
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                                21 Tem 2026 · 23:00
+                            </span>
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Klein, İstanbul
+                            </span>
+                        </div>
+                        <div class="ticket-footer">
+                            <div class="price">550₺ <small>'den başlayan</small></div>
+                            <button type="button" class="buy-btn">Bilet Al</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="ticket">
+                    <div class="ticket-poster">
+                        <img src="https://images.unsplash.com/photo-1574267432644-f6102a4a84fe?w=600&q=80&auto=format&fit=crop" alt="Jazz Akşamı" loading="lazy">
+                        <div class="poster-tags">
+                            <span class="badge">Jazz</span>
+                            <span class="capacity">%52 dolu</span>
+                        </div>
+                    </div>
+                    <div class="tear-line"></div>
+                    <div class="ticket-body">
+                        <h3><a href="#">Jazz Akşamı</a></h3>
+                        <div class="meta-row">
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                                18 Tem 2026 · 20:00
+                            </span>
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Nardis Jazz Club, İstanbul
+                            </span>
+                        </div>
+                        <div class="ticket-footer">
+                            <div class="price">380₺ <small>'den başlayan</small></div>
+                            <button type="button" class="buy-btn">Bilet Al</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="ticket">
+                    <div class="ticket-poster">
+                        <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&q=80&auto=format&fit=crop" alt="Açık Hava Sineması" loading="lazy">
+                        <div class="poster-tags">
+                            <span class="badge">Sinema</span>
+                            <span class="capacity">%70 dolu</span>
+                        </div>
+                    </div>
+                    <div class="tear-line"></div>
+                    <div class="ticket-body">
+                        <h3><a href="#">Açık Hava Sineması</a></h3>
+                        <div class="meta-row">
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                                26 Tem 2026 · 21:30
+                            </span>
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                                Maçka Park, İstanbul
+                            </span>
+                        </div>
+                        <div class="ticket-footer">
+                            <div class="price">150₺ <small>'den başlayan</small></div>
+                            <button type="button" class="buy-btn">Bilet Al</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Promo -->
+        <section class="promo-banner glass-panel" aria-label="Erken rezervasyon">
+            <div class="promo-copy">
+                <h2>Erken rezervasyonla %20'ye varan indirim</h2>
+                <p>Seçili etkinliklerde erken bilet al, en iyi koltuğu kap. Ücretsiz iptal ve anında dijital bilet garantisi.</p>
+            </div>
+            <div class="promo-actions">
+                <a href="#" class="btn btn-primary btn-lg">Fırsatları İncele</a>
+                <a href="#" class="btn btn-ghost btn-lg">Kayıt Ol</a>
+            </div>
+        </section>
+
+        <!-- Trust -->
+        <section class="trust-row glass-panel glass-panel--soft" aria-label="Güven rozetleri">
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+                Güvenli Ödeme
+            </div>
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg>
+                Anında Onay
+            </div>
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+                Dijital Bilet
+            </div>
+            <div class="trust-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3v5ZM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3v5Z"/></svg>
+                7/24 Destek
+            </div>
+        </section>
+
+    </div>
+</div>

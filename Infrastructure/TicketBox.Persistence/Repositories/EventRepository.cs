@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TicketBox.Application.Interfaces.Repositories;
+using TicketBox.Application.Specifications;
 using TicketBox.Domain.Entities;
 using TicketBox.Persistence.Context;
+using TicketBox.Persistence.Specifications;
 
 namespace TicketBox.Persistence.Repositories
 {
@@ -50,6 +52,12 @@ namespace TicketBox.Persistence.Repositories
         {
             _context.Events.Update(events);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<Event>> SearchAsync(ISpecification<Event> spec)
+        {
+            var query = SpecificationEvaluator.GetQuery(_context.Events.AsQueryable(), spec);
+            return await query.ToListAsync();
         }
     }
 }
