@@ -44,6 +44,7 @@ namespace TicketBox.WebAPI.Controllers
             var firstName = User.FindFirstValue(ClaimTypes.Name);
             var lastName = User.FindFirstValue(ClaimTypes.Surname);
             command.UserName = $"{firstName} {lastName}".Trim();
+            command.Email = User.FindFirstValue(ClaimTypes.Email);
 
             var bookingId = await _mediator.Send(command);
             return Ok(new { BookingId = bookingId });

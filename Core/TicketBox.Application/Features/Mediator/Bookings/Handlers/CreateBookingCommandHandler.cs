@@ -15,6 +15,7 @@ namespace TicketBox.Application.Features.Mediator.Bookings.Handlers
         private readonly IBookingRepository _bookingRepository;
         private readonly ITicketRepository _ticketRepository;
         private readonly ITicketImageService _ticketImageService;
+        private readonly IEmailService _emailService;
         private readonly IValidator<CreateBookingCommand> _validator;
 
         public CreateBookingCommandHandler(
@@ -22,13 +23,15 @@ namespace TicketBox.Application.Features.Mediator.Bookings.Handlers
             IBookingRepository bookingRepository,
             ITicketRepository ticketRepository,
             ITicketImageService ticketImageService,
-            IValidator<CreateBookingCommand> validator)
+            IValidator<CreateBookingCommand> validator,
+            IEmailService emailService)
         {
             _eventRepository = eventRepository;
             _bookingRepository = bookingRepository;
             _ticketRepository = ticketRepository;
             _ticketImageService = ticketImageService;
             _validator = validator;
+            _emailService = emailService;
         }
 
         public async Task<int> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
@@ -42,7 +45,7 @@ namespace TicketBox.Application.Features.Mediator.Bookings.Handlers
             var eventEntity = await _eventRepository.GetByIdAsync(request.EventId);
             if (eventEntity == null)
             {
-                throw new Exception("Etkinlik bulunamad?");
+                throw new Exception("Etkinlik bulunamadý");
             }
 
             if (eventEntity.Capacity < request.Quantity)
@@ -90,8 +93,12 @@ namespace TicketBox.Application.Features.Mediator.Bookings.Handlers
                 };
 
                 ticket.ImageUrl = _ticketImageService.SaveTicketImage(imageData, webRootPath);
+
                 await _ticketRepository.UpdateAsync(ticket);
+
+                await _emailService.SendTicketEmailAsync(request.Email, "Biletiniz Hazýr", "Merhaba, biletiniz ektedir.", Path.Combine(webRootPath, "tickets", ticket.PNR + ".png"));
             }
+
 
             return booking.BookingId;
         }

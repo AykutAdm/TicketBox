@@ -1,8 +1,179 @@
-﻿
+﻿@model UserDashboardPageDto
 @{
     ViewData["Title"] = "Dashboard";
     Layout = "~/Areas/User/Views/Shared/_UserLayout.cshtml";
+
+    var stats = Model.Stats;
+    var culture = new System.Globalization.CultureInfo("tr-TR");
+    var upcomingPct = stats.TicketCount > 0 ? stats.UpcomingTicketCount * 100.0 / stats.TicketCount : 0;
+    var pastPct = stats.TicketCount > 0 ? stats.PastTicketCount * 100.0 / stats.TicketCount : 0;
+    var maxBar = Math.Max(Math.Max(stats.TicketCount, stats.UpcomingTicketCount), Math.Max(stats.PastTicketCount, stats.BookingCount));
+    if (maxBar == 0) maxBar = 1;
 }
 
-<h1>Index</h1>
+<section class="user-dashboard">
+    <div class="user-dashboard__head glass-panel">
+        <div class="user-dashboard__head-glow" aria-hidden="true"></div>
+        <div class="user-dashboard__head-body">
+            <span class="eyebrow">Hesabım</span>
+            <h2 class="user-dashboard__title">Dashboard</h2>
+            <p class="user-dashboard__subtitle">@stats.TicketCount bilet · @stats.UpcomingTicketCount yaklaşan · @stats.BookingCount rezervasyon</p>
+        </div>
+        <a href="/User/Event/Index" class="btn btn-primary">Etkinlikleri Keşfet</a>
+    </div>
 
+    <div class="user-dashboard__layout">
+        <div class="user-dashboard__stats">
+            <article class="user-dashboard__stat glass-panel">
+                <div class="user-dashboard__stat-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z" /></svg>
+                </div>
+                <div>
+                    <span class="user-dashboard__stat-value">@stats.TicketCount</span>
+                    <span class="user-dashboard__stat-label">Toplam Bilet</span>
+                </div>
+            </article>
+            <article class="user-dashboard__stat glass-panel">
+                <div class="user-dashboard__stat-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" /></svg>
+                </div>
+                <div>
+                    <span class="user-dashboard__stat-value">@stats.UpcomingTicketCount</span>
+                    <span class="user-dashboard__stat-label">Yaklaşan Etkinlik</span>
+                </div>
+            </article>
+            <article class="user-dashboard__stat glass-panel">
+                <div class="user-dashboard__stat-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>
+                </div>
+                <div>
+                    <span class="user-dashboard__stat-value">@stats.PastTicketCount</span>
+                    <span class="user-dashboard__stat-label">Geçmiş Etkinlik</span>
+                </div>
+            </article>
+            <article class="user-dashboard__stat glass-panel">
+                <div class="user-dashboard__stat-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /><rect x="8" y="2" width="8" height="4" rx="1" /></svg>
+                </div>
+                <div>
+                    <span class="user-dashboard__stat-value">@stats.BookingCount</span>
+                    <span class="user-dashboard__stat-label">Toplam Rezervasyon</span>
+                </div>
+            </article>
+        </div>
+
+        <aside class="user-dashboard__spotlight glass-panel">
+            <span class="user-dashboard__spotlight-label">Toplam Harcama</span>
+            <strong class="user-dashboard__spotlight-value">@stats.TotalSpent.ToString("N0")₺</strong>
+            <p class="user-dashboard__spotlight-note">Tüm bilet alımlarında yaptığın ödeme</p>
+            <a href="/User/Ticket/Index" class="btn btn-ghost btn-sm">Biletlerimi Gör</a>
+        </aside>
+    </div>
+
+    <div class="user-dashboard__panels">
+        <article class="user-dashboard__panel glass-panel">
+            <header class="user-dashboard__panel-head">
+                <div>
+                    <span class="eyebrow">Dağılım</span>
+                    <h3 class="user-dashboard__panel-title">Bilet Durumu</h3>
+                </div>
+            </header>
+
+            <div class="user-dashboard__chart">
+                <div class="user-dashboard__donut" style="--upcoming: @upcomingPct.ToString(System.Globalization.CultureInfo.InvariantCulture)%; --past: @pastPct.ToString(System.Globalization.CultureInfo.InvariantCulture)%;">
+                    <div class="user-dashboard__donut-center">
+                        <strong>@stats.TicketCount</strong>
+                        <small>toplam</small>
+                    </div>
+                </div>
+                <ul class="user-dashboard__legend">
+                    <li><span class="user-dashboard__dot user-dashboard__dot--teal"></span> Yaklaşan <b>@stats.UpcomingTicketCount</b></li>
+                    <li><span class="user-dashboard__dot user-dashboard__dot--muted"></span> Geçmiş <b>@stats.PastTicketCount</b></li>
+                </ul>
+            </div>
+
+            <div class="user-dashboard__bars">
+                <div class="user-dashboard__bar-row">
+                    <span>Bilet</span>
+                    <div class="user-dashboard__bar"><i style="width:@(stats.TicketCount * 100 / maxBar)%"></i></div>
+                    <b>@stats.TicketCount</b>
+                </div>
+                <div class="user-dashboard__bar-row">
+                    <span>Yaklaşan</span>
+                    <div class="user-dashboard__bar"><i style="width:@(stats.UpcomingTicketCount * 100 / maxBar)%"></i></div>
+                    <b>@stats.UpcomingTicketCount</b>
+                </div>
+                <div class="user-dashboard__bar-row">
+                    <span>Rezervasyon</span>
+                    <div class="user-dashboard__bar"><i style="width:@(stats.BookingCount * 100 / maxBar)%"></i></div>
+                    <b>@stats.BookingCount</b>
+                </div>
+            </div>
+        </article>
+
+        <article class="user-dashboard__panel glass-panel">
+            <header class="user-dashboard__panel-head">
+                <div>
+                    <span class="eyebrow">Takvim</span>
+                    <h3 class="user-dashboard__panel-title">Yaklaşan Biletler</h3>
+                </div>
+                <a href="/User/Ticket/Index" class="btn btn-ghost btn-sm">Tümü</a>
+            </header>
+
+            @if (Model.UpcomingTickets.Count == 0)
+            {
+                <p class="user-dashboard__empty">Yaklaşan biletin yok. Etkinliklere göz at.</p>
+            }
+            else
+            {
+                <ul class="user-dashboard__timeline">
+                    @foreach (var ticket in Model.UpcomingTickets)
+                    {
+                        <li class="user-dashboard__timeline-item">
+                            <div class="user-dashboard__date">
+                                <strong>@ticket.EventDate.ToString("dd", culture)</strong>
+                                <small>@ticket.EventDate.ToString("MMM", culture)</small>
+                            </div>
+                            <div class="user-dashboard__event">
+                                <strong>@ticket.EventTitle</strong>
+                                <span>@ticket.Location · @ticket.PNR</span>
+                                <small>@ticket.EventDate.ToString("HH:mm", culture)</small>
+                            </div>
+                            <a href="/User/Ticket/Download/@ticket.TicketId" class="user-dashboard__download">İndir</a>
+                        </li>
+                    }
+                </ul>
+            }
+        </article>
+    </div>
+
+    <div class="user-dashboard__menu">
+        <a href="/User/Ticket/Index" class="user-dashboard__link glass-panel">
+            <span class="user-dashboard__link-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z" /><path d="M13 6v12" stroke-dasharray="2 3" /></svg>
+            </span>
+            <span class="user-dashboard__link-text">
+                <strong>Biletlerim</strong>
+                <small>Biletlerini görüntüle ve indir</small>
+            </span>
+        </a>
+        <a href="/User/Event/Index" class="user-dashboard__link glass-panel">
+            <span class="user-dashboard__link-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" /></svg>
+            </span>
+            <span class="user-dashboard__link-text">
+                <strong>Etkinlikler</strong>
+                <small>Etkinliklere göz at ve bilet al</small>
+            </span>
+        </a>
+        <a href="/User/Profile/Index" class="user-dashboard__link glass-panel">
+            <span class="user-dashboard__link-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" /></svg>
+            </span>
+            <span class="user-dashboard__link-text">
+                <strong>Profil</strong>
+                <small>Hesap bilgilerini görüntüle</small>
+            </span>
+        </a>
+    </div>
+</section>

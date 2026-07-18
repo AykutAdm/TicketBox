@@ -1,10 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using TicketBox.Application.Features.Mediator.UserDashboards.Queries;
 using TicketBox.Application.Features.Mediator.Users.Queries;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace TicketBox.WebAPI.Controllers
 {
@@ -25,6 +24,14 @@ namespace TicketBox.WebAPI.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var result = await _mediator.Send(new GetUserProfileQuery(userId));
+            return Ok(result);
+        }
+
+        [HttpGet("me/dashboard")]
+        public async Task<IActionResult> GetDashboard()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result = await _mediator.Send(new GetUserDashboardQuery(userId));
             return Ok(result);
         }
     }

@@ -13,6 +13,7 @@ using TicketBox.Application.Interfaces.Services;
 using TicketBox.Application.Mappings;
 using TicketBox.Domain.Entities;
 using TicketBox.Infrastructure.Auth;
+using TicketBox.Infrastructure.Email;
 using TicketBox.Infrastructure.ImageGeneration;
 using TicketBox.Persistence.Context;
 using TicketBox.Persistence.Repositories;
@@ -77,10 +78,12 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 builder.Services.AddScoped<IHeroSliderRepository, HeroSliderRepository>();
+builder.Services.AddScoped<IUserDashboardRepository, UserDashboardRepository>();
 
 //Service
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<ITicketImageService, TicketImageService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 //CQRS
 builder.Services.AddScoped<GetCategoryQueryHandler>();

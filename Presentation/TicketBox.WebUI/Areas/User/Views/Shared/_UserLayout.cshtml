@@ -88,6 +88,18 @@
         </div>
     </div>
 
+    <div class="user-chatbot" id="user-chatbot">
+        <div class="user-chatbot__zone" id="user-chatbot-zone">
+            <div class="user-chatbot__bubble" aria-hidden="true">
+                <span class="user-chatbot__bubble-tag">Asistan</span>
+                <span class="user-chatbot__bubble-msg">Birlikte etkinlik seçelim</span>
+            </div>
+            <button type="button" class="user-chatbot__btn" id="user-chatbot-btn" aria-label="Asistan — Birlikte etkinlik seçelim">
+                <canvas id="chatbot-avatar-canvas" width="120" height="120"></canvas>
+            </button>
+        </div>
+    </div>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/background.js" asp-append-version="true"></script>
     <script>
@@ -114,6 +126,7 @@
             });
         })();
     </script>
+    <script src="~/js/chatbot-avatar.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
