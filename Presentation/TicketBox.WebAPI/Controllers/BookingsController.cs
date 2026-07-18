@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TicketBox.Application.Features.Mediator.Bookings.Commands;
@@ -35,10 +35,16 @@ namespace TicketBox.WebAPI.Controllers
         }
 
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> CreateBooking(CreateBookingCommand command)
         {
             command.AppUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var firstName = User.FindFirstValue(ClaimTypes.Name);
+            var lastName = User.FindFirstValue(ClaimTypes.Surname);
+            command.UserName = $"{firstName} {lastName}".Trim();
+
             var bookingId = await _mediator.Send(command);
             return Ok(new { BookingId = bookingId });
         }

@@ -15,7 +15,7 @@ namespace TicketBox.Application.Interfaces.Repositories
         Task CreateAsync(Event events);
         Task UpdateAsync(Event events);
         Task DeleteAsync(int id);
-
+        Task<List<Event>> GetFeaturedEvents();
         Task<List<Event>> SearchAsync(ISpecification<Event> spec);
     }
 }

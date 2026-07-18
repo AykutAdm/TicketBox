@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TicketBox.Application.Features.Mediator.Tickets.Queries;
@@ -38,6 +38,16 @@ namespace TicketBox.WebAPI.Controllers
             var appUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var result = await _mediator.Send(new GetMyTicketsQuery { AppUserId = appUserId });
             return Ok(result);
+        }
+
+        [Authorize]
+        [HttpGet("{id}/download")]
+        public async Task<IActionResult> DownloadTicket(int id)
+        {
+            var ticket = await _mediator.Send(new GetTicketByIdQuery(id));
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "tickets", ticket.PNR + ".png");
+            var bytes = System.IO.File.ReadAllBytes(filePath);
+            return File(bytes, "image/png", ticket.PNR + ".png");
         }
     }
 }

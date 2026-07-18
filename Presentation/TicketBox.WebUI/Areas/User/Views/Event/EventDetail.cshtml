@@ -1,0 +1,191 @@
+﻿@model GetEventByIdDto
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = "~/Areas/User/Views/Shared/_UserLayout.cshtml";
+}
+
+<section class="user-event-detail">
+    <a href="/User/Event/Index" class="user-event-detail__back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
+        Etkinliklere dön
+    </a>
+
+    <div class="user-event-detail__banner">
+        <div class="user-event-detail__banner-media">
+            <img class="user-event-detail__banner-img" src="@Model.ImageUrl" alt="@Model.Title" fetchpriority="high" decoding="sync">
+        </div>
+        <div class="user-event-detail__banner-shade"></div>
+        <div class="user-event-detail__banner-content">
+            <div class="user-event-detail__tags">
+                <span class="user-event-card__badge">@Model.CategoryName</span>
+                @if (Model.IsFeatured == true)
+                {
+                    <span class="user-event-card__badge user-event-card__badge--featured">Öne Çıkan</span>
+                }
+            </div>
+            <h1 class="user-event-detail__title">@Model.Title</h1>
+            <div class="user-event-detail__banner-meta">
+                <span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" /></svg>
+                    @Model.EventDate.ToString("dd MMMM yyyy, HH:mm", new System.Globalization.CultureInfo("tr-TR"))
+                </span>
+                <span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>
+                    @Model.Location
+                </span>
+                <span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /></svg>
+                    @Model.Capacity kişi
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="user-event-detail__layout">
+        <div class="user-event-detail__main">
+            <article class="user-event-detail__about glass-panel">
+                <h2 class="user-event-detail__about-title">Etkinlik Hakkında</h2>
+                <p class="user-event-detail__about-lead">@Model.Description</p>
+
+                <div class="user-event-detail__facts">
+                    <div class="user-event-detail__fact">
+                        <span>Kategori</span>
+                        <strong>@Model.CategoryName</strong>
+                    </div>
+                    <div class="user-event-detail__fact">
+                        <span>Kapasite</span>
+                        <strong>@Model.Capacity kişi</strong>
+                    </div>
+                    <div class="user-event-detail__fact">
+                        <span>Konum</span>
+                        <strong>@Model.Location</strong>
+                    </div>
+                </div>
+            </article>
+
+            <article class="user-event-detail__rules glass-panel">
+                <h2 class="user-event-detail__about-title">Genel Etkinlik Kuralları</h2>
+                <p class="user-event-detail__rules-intro">Etkinlik deneyiminizin güvenli ve keyifli geçmesi için lütfen aşağıdaki kurallara uyun.</p>
+
+                <ul class="user-event-detail__rules-list">
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4" /><circle cx="12" cy="12" r="10" /></svg>
+                        <span>Biletler kişiye özeldir; başkasına devredilemez veya satılamaz.</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4" /><circle cx="12" cy="12" r="10" /></svg>
+                        <span>Etkinlik alanına en geç başlangıç saatinden 30 dakika önce giriş yapılmalıdır.</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4" /><circle cx="12" cy="12" r="10" /></svg>
+                        <span>Girişte dijital veya basılı biletiniz ile birlikte kimlik kontrolü yapılabilir.</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4" /><circle cx="12" cy="12" r="10" /></svg>
+                        <span>18 yaş altı katılımcılar yalnızca ebeveyn veya yasal veli eşliğinde giriş yapabilir.</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4" /><circle cx="12" cy="12" r="10" /></svg>
+                        <span>Profesyonel kamera, kayıt cihazı ve dışarıdan yiyecek-içecek getirilmesi yasaktır.</span>
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4" /><circle cx="12" cy="12" r="10" /></svg>
+                        <span>Organizasyon, güvenlik gerekçesiyle girişi reddetme veya etkinliği iptal etme hakkını saklı tutar.</span>
+                    </li>
+                </ul>
+            </article>
+        </div>
+
+
+
+
+
+        <aside class="user-event-detail__ticket glass-panel"
+               data-unit-price="@Model.Price.ToString(System.Globalization.CultureInfo.InvariantCulture)"
+               data-max="@Model.Capacity">
+            @if (TempData["Error"] != null)
+            {
+                <p class="user-event-detail__ticket-error">@TempData["Error"]</p>
+            }
+
+            <form asp-area="User" asp-controller="Event" asp-action="BuyTicket" method="post">
+                <input type="hidden" name="EventId" value="@Model.EventId" />
+                <input type="hidden" name="Quantity" id="quantity" value="1" />
+
+                <div class="user-event-detail__ticket-head">
+                    <span class="eyebrow">Bilet</span>
+                    <div class="user-event-detail__ticket-price">
+                        <small>Birim fiyat</small>
+                        <strong>@Model.Price.ToString("N0")₺</strong>
+                    </div>
+                </div>
+
+                <div class="user-event-detail__preview">
+                    <label class="user-event-detail__preview-label">Kişi sayısı</label>
+                    <div class="user-event-detail__stepper">
+                        <button type="button" data-step="down" aria-label="Azalt">−</button>
+                        <span class="count">1</span>
+                        <button type="button" data-step="up" aria-label="Artır">+</button>
+                    </div>
+                    <div class="user-event-detail__total">
+                        <span>Toplam tutar</span>
+                        <b data-total>@Model.Price.ToString("N0")₺</b>
+                    </div>
+                </div>
+
+                <ul class="user-event-detail__ticket-list">
+                    <li>
+                        <span>Tarih</span>
+                        <b>@Model.EventDate.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("tr-TR"))</b>
+                    </li>
+                    <li>
+                        <span>Saat</span>
+                        <b>@Model.EventDate.ToString("HH:mm")</b>
+                    </li>
+                    <li>
+                        <span>Müsait bilet</span>
+                        <b>@Model.Capacity</b>
+                    </li>
+                </ul>
+
+                <button type="submit" class="btn btn-primary btn-block btn-lg">Bilet Al</button>
+            </form>
+
+            <p class="user-event-detail__ticket-note">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" /></svg>
+                Güvenli ödeme · Anında dijital bilet
+            </p>
+        </aside>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        (function () {
+            const ticket = document.querySelector('.user-event-detail__ticket');
+            if (!ticket) return;
+
+            const unitPrice = parseFloat(ticket.dataset.unitPrice || '0');
+            const maxQty = parseInt(ticket.dataset.max || '10', 10);
+            const decrease = ticket.querySelector('[data-step="down"]');
+            const increase = ticket.querySelector('[data-step="up"]');
+            const countEl = ticket.querySelector('.count');
+            const totalEl = ticket.querySelector('[data-total]');
+            const quantityInput = ticket.querySelector('#quantity');
+            let qty = 1;
+
+            function render() {
+                countEl.textContent = qty;
+                quantityInput.value = qty;
+                totalEl.textContent = (qty * unitPrice).toLocaleString('tr-TR') + '₺';
+                decrease.disabled = qty <= 1;
+                increase.disabled = qty >= maxQty;
+            }
+
+            decrease.addEventListener('click', () => { if (qty > 1) { qty--; render(); } });
+            increase.addEventListener('click', () => { if (qty < maxQty) { qty++; render(); } });
+
+            render();
+        })();
+    </script>
+}

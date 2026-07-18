@@ -6,6 +6,7 @@ namespace TicketBox.WebUI.Areas.User.Controllers
     [Route("User/Dashboard")]
     public class DashboardController : Controller
     {
+        [Route("Index")]
         public IActionResult Index()
         {
             return View();

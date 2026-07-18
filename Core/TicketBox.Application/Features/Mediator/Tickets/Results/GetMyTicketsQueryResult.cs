@@ -16,5 +16,6 @@ namespace TicketBox.Application.Features.Mediator.Tickets.Results
         public string EventTitle { get; set; }
         public DateTime EventDate { get; set; }
         public string Location { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }

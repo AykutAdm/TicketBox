@@ -306,6 +306,9 @@ namespace TicketBox.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool?>("IsFeatured")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -324,6 +327,35 @@ namespace TicketBox.Persistence.Migrations
                     b.ToTable("Events");
                 });
 
+            modelBuilder.Entity("TicketBox.Domain.Entities.HeroSlider", b =>
+                {
+                    b.Property<int>("HeroSliderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HeroSliderId"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SubTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("HeroSliderId");
+
+                    b.ToTable("HeroSliders");
+                });
+
             modelBuilder.Entity("TicketBox.Domain.Entities.Ticket", b =>
                 {
                     b.Property<int>("TicketId")
@@ -334,6 +366,9 @@ namespace TicketBox.Persistence.Migrations
 
                     b.Property<int>("BookingId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PNR")
                         .IsRequired()

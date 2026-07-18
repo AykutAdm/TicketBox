@@ -6,10 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using TicketBox.Application.Features.CQRS.Categories.Commands;
 using TicketBox.Application.Features.CQRS.Categories.Results;
+using TicketBox.Application.Features.CQRS.HeroSliders.Commands;
+using TicketBox.Application.Features.CQRS.HeroSliders.Results;
 using TicketBox.Application.Features.Mediator.Bookings.Results;
 using TicketBox.Application.Features.Mediator.Events.Commands;
 using TicketBox.Application.Features.Mediator.Events.Results;
 using TicketBox.Application.Features.Mediator.Tickets.Results;
+using TicketBox.Application.Features.Mediator.Users.Results;
 using TicketBox.Domain.Entities;
 
 namespace TicketBox.Application.Mappings
@@ -37,6 +40,10 @@ namespace TicketBox.Application.Mappings
                 opt => opt.MapFrom(src => src.Category.CategoryName));
             CreateMap<Event, GetEventByIdQueryResult>()
                    .ForMember(dest => dest.CategoryName,
+                opt => opt.MapFrom(src => src.Category.CategoryName));
+
+            CreateMap<Event, GetFeaturedEventsQueryResult>()
+                .ForMember(dest => dest.CategoryName,
                 opt => opt.MapFrom(src => src.Category.CategoryName));
 
 
@@ -77,6 +84,18 @@ namespace TicketBox.Application.Mappings
                 .ForMember(d => d.LastName, o => o.MapFrom(s => s.AppUser.LastName));
 
             CreateMap<Ticket, TicketSummary>();
+
+
+            //HeroSlider
+            CreateMap<CreateHeroSliderCommand, HeroSlider>();
+            CreateMap<UpdateHeroSliderCommand, HeroSlider>();
+
+            CreateMap<GetHeroSliderQueryResult, HeroSlider>().ReverseMap();
+            CreateMap<GetHeroSliderByIdQueryResult, HeroSlider>().ReverseMap();
+
+
+            //User
+            CreateMap<AppUser, GetUserProfileQueryResult>();
 
         }
     }

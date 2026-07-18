@@ -1,15 +1,119 @@
-﻿
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
-<html>
+﻿<!DOCTYPE html>
+<html lang="tr">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>_UserLayout</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] — TicketBox</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/variables.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/base.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/components.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/user.css" asp-append-version="true">
+
+    @await RenderSectionAsync("Styles", required: false)
 </head>
-<body>
+<body class="user-page">
+
+    <div class="stage-bg">
+        <canvas id="bg-canvas"></canvas>
+    </div>
+    <div class="scrim"></div>
+    <div class="grain"></div>
+
+    <div class="user-shell">
+        <div class="user-sidebar-backdrop" aria-hidden="true"></div>
+
+        <aside class="user-sidebar" aria-label="Kullanıcı menüsü">
+            <a href="/User/Dashboard/Index" class="user-sidebar__brand">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z" /><path d="M13 6v12" stroke-dasharray="2 3" /></svg>
+                TicketBox
+            </a>
+
+            <span class="user-sidebar__label">Hesabım</span>
+            <div class="user-sidebar__menu">
+                <a href="/User/Dashboard/Index" class="user-sidebar__link">
+                    <span class="user-sidebar__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>
+                    </span>
+                    <span class="user-sidebar__text">Dashboard</span>
+                </a>
+                <a href="/User/Event/Index" class="user-sidebar__link">
+                    <span class="user-sidebar__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" /></svg>
+                    </span>
+                    <span class="user-sidebar__text">Etkinlikler</span>
+                </a>
+                <a href="/User/Ticket/Index" class="user-sidebar__link">
+                    <span class="user-sidebar__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z" /><path d="M13 6v12" stroke-dasharray="2 3" /></svg>
+                    </span>
+                    <span class="user-sidebar__text">Biletlerim</span>
+                </a>
+                <a href="/User/Profile/Index" class="user-sidebar__link">
+                    <span class="user-sidebar__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" /></svg>
+                    </span>
+                    <span class="user-sidebar__text">Profil</span>
+                </a>
+            </div>
+
+            <div class="user-sidebar__footer">
+                <a href="/Default/Index">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6" /></svg>
+                    Ana sayfaya dön
+                </a>
+            </div>
+        </aside>
+
+        <div class="user-panel">
+            <header class="user-topbar">
+                <div class="user-topbar__left">
+                    <button type="button" class="user-sidebar-toggle" aria-label="Menüyü aç">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18" /></svg>
+                    </button>
+                    <h1 class="user-page-title">@ViewData["Title"]</h1>
+                </div>
+                <div class="user-topbar__right">
+                    @await Component.InvokeAsync("_UserTopProfileComponentPartial")
+                </div>
+            </header>
+
+            <main class="user-content">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/background.js" asp-append-version="true"></script>
+    <script>
+        (function () {
+            const toggle = document.querySelector('.user-sidebar-toggle');
+            const sidebar = document.querySelector('.user-sidebar');
+            const backdrop = document.querySelector('.user-sidebar-backdrop');
+            if (!toggle || !sidebar) return;
+
+            function closeSidebar() {
+                sidebar.classList.remove('open');
+                backdrop?.classList.remove('open');
+            }
+
+            toggle.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+                backdrop?.classList.toggle('open');
+            });
+
+            backdrop?.addEventListener('click', closeSidebar);
+
+            sidebar.querySelectorAll('.user-sidebar__link').forEach(link => {
+                link.addEventListener('click', closeSidebar);
+            });
+        })();
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

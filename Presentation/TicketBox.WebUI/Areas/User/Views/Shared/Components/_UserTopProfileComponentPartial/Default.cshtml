@@ -1,0 +1,55 @@
+﻿@model UserProfileDto
+
+@{
+    var initials = "?";
+    var displayName = "Misafir";
+    var email = "";
+
+    if (Model != null)
+    {
+        initials = string.Concat(Model.FirstName?.FirstOrDefault(), Model.LastName?.FirstOrDefault());
+        if (string.IsNullOrWhiteSpace(initials))
+        {
+            initials = Model.UserName?.FirstOrDefault().ToString() ?? "?";
+        }
+
+        initials = initials.ToUpperInvariant();
+        displayName = $"{Model.FirstName} {Model.LastName}".Trim();
+        if (string.IsNullOrWhiteSpace(displayName))
+        {
+            displayName = Model.UserName ?? "Kullanıcı";
+        }
+
+        email = Model.Email ?? "";
+    }
+}
+
+<div class="user-top-profile">
+    @if (Model != null)
+    {
+        <div class="user-top-profile__chip">
+            <div class="user-top-profile__avatar">
+                @if (!string.IsNullOrWhiteSpace(Model.ProfileImageUrl))
+                {
+                    <img src="@Model.ProfileImageUrl" alt="@displayName">
+                }
+                else
+                {
+                    @initials
+                }
+            </div>
+            <div class="user-top-profile__meta">
+                <span class="user-top-profile__name">@displayName</span>
+                @if (!string.IsNullOrWhiteSpace(email))
+                {
+                    <span class="user-top-profile__email">@email</span>
+                }
+            </div>
+        </div>
+        <a href="/Auth/LogOut" class="btn btn-ghost btn-sm">Çıkış</a>
+    }
+    else
+    {
+        <a href="/Auth/Login" class="btn btn-primary btn-sm">Giriş Yap</a>
+    }
+</div>

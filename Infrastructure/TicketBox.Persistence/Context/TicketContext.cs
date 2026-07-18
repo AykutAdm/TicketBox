@@ -19,5 +19,6 @@ namespace TicketBox.Persistence.Context
         public DbSet<Event> Events { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<HeroSlider> HeroSliders { get; set; }
     }
 }

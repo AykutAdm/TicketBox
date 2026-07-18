@@ -1,0 +1,43 @@
+﻿@model List<ResultFeaturedEventDto>
+
+<section class="home-section" aria-labelledby="featured-heading">
+    <div class="section-head">
+        <div>
+            <h2 id="featured-heading">Öne Çıkan Etkinlikler</h2>
+            <p>En çok ilgi gören etkinlikler — kaçırmadan yerini ayırt.</p>
+        </div>
+        <a href="/Event/EventList">Tümünü Gör →</a>
+    </div>
+    <div class="card-grid">
+        @foreach (var item in Model)
+        {
+            <article class="ticket">
+                <div class="ticket-poster">
+                    <img src="@item.ImageUrl" alt="@item.Title" loading="lazy">
+                    <div class="poster-tags">
+                        <span class="badge">@item.CategoryName</span>
+                        <span class="capacity">@item.Capacity</span>
+                    </div>
+                </div>
+                <div class="tear-line"></div>
+                <div class="ticket-body">
+                    <h3><a href="#">@item.Title</a></h3>
+                    <div class="meta-row">
+                        <span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" /></svg>
+                            @item.EventDate.ToString("dd-MM-yyyy")
+                        </span>
+                        <span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>
+                            @item.Location
+                        </span>
+                    </div>
+                    <div class="ticket-footer">
+                        <div class="price">@item.Price₺</div>
+                        <button type="button" class="buy-btn">Bilet Al</button>
+                    </div>
+                </div>
+            </article>
+        }
+    </div>
+</section>

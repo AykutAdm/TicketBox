@@ -1,0 +1,115 @@
+﻿@model List<ResultMyTicketDto>
+@{
+    ViewData["Title"] = "Biletlerim";
+    Layout = "~/Areas/User/Views/Shared/_UserLayout.cshtml";
+
+    var tickets = Model ?? new List<ResultMyTicketDto>();
+    var now = DateTime.Now;
+    var upcomingCount = tickets.Count(t => t.EventDate >= now);
+    var pastCount = tickets.Count - upcomingCount;
+    var totalSpent = tickets.Sum(t => t.Price);
+    var culture = new System.Globalization.CultureInfo("tr-TR");
+}
+
+<section class="user-tickets">
+    <div class="user-tickets__head glass-panel">
+        <div>
+            <span class="eyebrow">Hesabım</span>
+            <h2 class="user-tickets__title">Biletlerim</h2>
+            <p class="user-tickets__subtitle">
+                @if (tickets.Count == 0)
+                {
+                    <text>Henüz satın aldığın bir bilet yok.</text>
+                }
+                else
+                {
+                    <text>@tickets.Count dijital bilet — @upcomingCount yaklaşan, @pastCount geçmiş.</text>
+                }
+            </p>
+        </div>
+        @if (tickets.Count > 0)
+        {
+            <a href="/User/Event/Index" class="btn btn-primary">Yeni Bilet Al</a>
+        }
+    </div>
+
+    @if (tickets.Count > 0)
+    {
+        <div class="user-tickets__stats">
+            <div class="user-tickets__stat glass-panel">
+                <span class="user-tickets__stat-value">@tickets.Count</span>
+                <span class="user-tickets__stat-label">Toplam Bilet</span>
+            </div>
+            <div class="user-tickets__stat glass-panel">
+                <span class="user-tickets__stat-value">@upcomingCount</span>
+                <span class="user-tickets__stat-label">Yaklaşan Etkinlik</span>
+            </div>
+            <div class="user-tickets__stat glass-panel">
+                <span class="user-tickets__stat-value">@totalSpent.ToString("N0")₺</span>
+                <span class="user-tickets__stat-label">Toplam Harcama</span>
+            </div>
+        </div>
+
+        <div class="user-tickets__grid">
+            @foreach (var ticket in tickets.OrderBy(t => t.EventDate >= now ? 0 : 1).ThenBy(t => t.EventDate))
+            {
+                var isUpcoming = ticket.EventDate >= now;
+                <article class="user-ticket-card glass-panel @(isUpcoming ? "user-ticket-card--upcoming" : "user-ticket-card--past")">
+                    <div class="user-ticket-card__stub" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z" /><path d="M13 6v12" stroke-dasharray="2 3" /></svg>
+                    </div>
+
+                    <div class="user-ticket-card__body">
+                        <header class="user-ticket-card__head">
+                            <div class="user-ticket-card__pnr">
+                                <small>PNR</small>
+                                <strong>@ticket.PNR</strong>
+                            </div>
+                            <span class="user-ticket-card__status">
+                                @(isUpcoming ? "Yaklaşan" : "Geçmiş")
+                            </span>
+                        </header>
+
+                        <h3 class="user-ticket-card__title">@ticket.EventTitle</h3>
+
+                        <ul class="user-ticket-card__meta">
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" /></svg>
+                                <span>@ticket.EventDate.ToString("dd MMMM yyyy, HH:mm", culture)</span>
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>
+                                <span>@ticket.Location</span>
+                            </li>
+                        </ul>
+
+                        <footer class="user-ticket-card__footer">
+                            <div class="user-ticket-card__price">
+                                <small>Bilet fiyatı</small>
+                                <strong>@ticket.Price.ToString("N0")₺</strong>
+                            </div>
+                            <div class="user-ticket-card__actions">
+                                <div class="user-ticket-card__purchase">
+                                    <small>Satın alma</small>
+                                    <strong>@ticket.PurchaseDate.ToString("dd MMM yyyy", culture)</strong>
+                                </div>
+                                <a href="/User/Ticket/Download/@ticket.TicketId" class="btn btn-primary btn-sm">İndir</a>
+                            </div>
+                        </footer>
+                    </div>
+                </article>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="user-tickets__empty glass-panel">
+            <div class="user-tickets__empty-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z" /><path d="M13 6v12" stroke-dasharray="2 3" /></svg>
+            </div>
+            <h2>Henüz biletin yok</h2>
+            <p>İlginizi çeken bir etkinliği seçip birkaç tıkla dijital biletinizi alabilirsiniz.</p>
+            <a href="/User/Event/Index" class="btn btn-primary">Etkinlikleri Keşfet</a>
+        </div>
+    }
+</section>

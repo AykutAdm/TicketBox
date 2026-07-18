@@ -185,9 +185,16 @@
             return;
         }
 
-        initBackground(canvas, {
+        const isUserPage = document.body.classList.contains('user-page');
+
+        initBackground(canvas, isUserPage ? {
+            bg: '#060B0F',
+            colors: ['#0E7490', '#155E75', '#164E63', '#0F172A'],
+            speed: 1.4,
+            grain: 0.12
+        } : {
             bg: '#07070E',
-            colors: ['#3B82F6', '#2563EB', '#1D4ED8', '#0B1120'], // darker blue with brighter moving highlights
+            colors: ['#3B82F6', '#2563EB', '#1D4ED8', '#0B1120'],
             speed: 1.6,
             grain: 0.15
         });

@@ -6,12 +6,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TicketBox.Application.Features.CQRS.Categories.Handlers;
+using TicketBox.Application.Features.CQRS.HeroSliders.Handlers;
 using TicketBox.Application.Features.Mediator.Events.Commands;
 using TicketBox.Application.Interfaces.Repositories;
 using TicketBox.Application.Interfaces.Services;
 using TicketBox.Application.Mappings;
 using TicketBox.Domain.Entities;
 using TicketBox.Infrastructure.Auth;
+using TicketBox.Infrastructure.ImageGeneration;
 using TicketBox.Persistence.Context;
 using TicketBox.Persistence.Repositories;
 using TicketBox.WebAPI.Middlewares;
@@ -74,17 +76,24 @@ builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+builder.Services.AddScoped<IHeroSliderRepository, HeroSliderRepository>();
 
 //Service
 builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<ITicketImageService, TicketImageService>();
 
-
+//CQRS
 builder.Services.AddScoped<GetCategoryQueryHandler>();
 builder.Services.AddScoped<GetCategoryByIdQueryHandler>();
 builder.Services.AddScoped<CreateCategoryCommandHandler>();
 builder.Services.AddScoped<UpdateCategoryCommandHandler>();
 builder.Services.AddScoped<RemoveCategoryCommandHandler>();
 
+builder.Services.AddScoped<GetHeroSliderQueryHandler>();
+builder.Services.AddScoped<GetHeroSliderByIdQueryHandler>();
+builder.Services.AddScoped<CreateHeroSliderCommandHandler>();
+builder.Services.AddScoped<UpdateHeroSliderCommandHandler>();
+builder.Services.AddScoped<RemoveHeroSliderCommandHandler>();
 
 
 
@@ -105,6 +114,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseStaticFiles();
 
 app.UseAuthentication();
 

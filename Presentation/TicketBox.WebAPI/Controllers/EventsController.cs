@@ -54,6 +54,13 @@ namespace TicketBox.WebAPI.Controllers
             return Ok("Etkinlik silindi.");
         }
 
+        [HttpGet("featured")]
+        public async Task<IActionResult> GetFeaturedEvents()
+        {
+            var result = await _mediator.Send(new GetFeaturedEventsQuery());
+            return Ok(result);
+        }
+
         [HttpGet("search")]
         public async Task<IActionResult> Search([FromQuery] int? categoryId, [FromQuery] string? title, [FromQuery] decimal? minPrice, [FromQuery] decimal? maxPrice)
         {

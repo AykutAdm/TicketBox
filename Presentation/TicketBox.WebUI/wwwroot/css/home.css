@@ -12,8 +12,8 @@ main {
 /* ----- Hero slider (glass frame) ----- */
 
 .home .slider {
-    height: min(78vh, 680px);
     margin-top: 12px;
+    isolation: isolate;
     border: 1px solid rgba(255, 255, 255, .14);
     background: rgba(8, 8, 13, .12);
     backdrop-filter: blur(8px) saturate(150%);

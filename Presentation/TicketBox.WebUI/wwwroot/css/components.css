@@ -7,7 +7,7 @@ header {
     padding: 14px var(--page-gutter) 0;
 }
 
-nav {
+header nav {
     position: relative;
     display: flex;
     align-items: center;
@@ -24,7 +24,7 @@ nav {
     box-shadow: var(--nav-shadow);
 }
 
-    nav::before {
+    header nav::before {
         content: "";
         position: absolute;
         inset: 0;
@@ -33,7 +33,7 @@ nav {
         pointer-events: none;
     }
 
-    nav::after {
+    header nav::after {
         content: "";
         position: absolute;
         left: 32px;
@@ -480,7 +480,9 @@ nav {
 
 .slider {
     position: relative;
-    height: min(78vh, 680px);
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    min-height: 440px;
     border-radius: 32px;
     overflow: hidden;
     margin-top: 8px;
@@ -490,25 +492,34 @@ nav {
     position: absolute;
     inset: 0;
     opacity: 0;
+    z-index: 1;
     transition: opacity 1s var(--ease);
     pointer-events: none;
 }
 
     .slide.active {
         opacity: 1;
+        z-index: 2;
         pointer-events: auto;
     }
 
-    .slide img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transform: scale(1.06);
-        transition: transform 7s linear;
-    }
+.slide-media {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #0b0b12;
+}
 
-    .slide.active img {
-        transform: scale(1.14);
+    .slide-media img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        max-width: none;
+        transform: translate(-50%, -50%);
     }
 
     .slide::after {
@@ -523,8 +534,19 @@ nav {
     left: 0;
     right: 0;
     bottom: 0;
-    padding: 56px;
+    padding: 56px 220px 56px 56px;
     z-index: 3;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity .45s var(--ease), transform .45s var(--ease), visibility 0s linear .45s;
+}
+
+.slide.active .slide-copy {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity .55s var(--ease) .15s, transform .55s var(--ease) .15s, visibility 0s;
 }
 
     .slide-copy .eyebrow {
@@ -988,12 +1010,33 @@ footer {
         grid-template-columns: 1fr;
     }
 
-    .slide-copy {
-        padding: 28px;
+    .slider {
+        aspect-ratio: 16 / 9;
+        min-height: 280px;
+        border-radius: 20px;
     }
 
+    .slide-copy {
+        padding: 28px 28px 88px;
+    }
+
+        .slide-copy h1 {
+            max-width: 100%;
+            font-size: clamp(1.75rem, 8vw, 2.3rem);
+        }
+
+        .slide-copy .cta-row {
+            flex-direction: column;
+        }
+
+            .slide-copy .cta-row .btn {
+                width: 100%;
+            }
+
     .slider-controls {
-        bottom: 24px;
-        right: 24px;
+        bottom: 20px;
+        right: 20px;
+        left: 20px;
+        justify-content: space-between;
     }
 }

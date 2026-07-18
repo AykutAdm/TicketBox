@@ -1,12 +1,10 @@
 using FluentValidation;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 using TicketBox.Application.Features.Mediator.Bookings.Commands;
 using TicketBox.Application.Interfaces.Repositories;
+using TicketBox.Application.Interfaces.Services;
+using TicketBox.Application.Models;
 using TicketBox.Domain.Entities;
 
 namespace TicketBox.Application.Features.Mediator.Bookings.Handlers
@@ -16,13 +14,20 @@ namespace TicketBox.Application.Features.Mediator.Bookings.Handlers
         private readonly IEventRepository _eventRepository;
         private readonly IBookingRepository _bookingRepository;
         private readonly ITicketRepository _ticketRepository;
+        private readonly ITicketImageService _ticketImageService;
         private readonly IValidator<CreateBookingCommand> _validator;
 
-        public CreateBookingCommandHandler(IEventRepository eventRepository, IBookingRepository bookingRepository, ITicketRepository ticketRepository, IValidator<CreateBookingCommand> validator)
+        public CreateBookingCommandHandler(
+            IEventRepository eventRepository,
+            IBookingRepository bookingRepository,
+            ITicketRepository ticketRepository,
+            ITicketImageService ticketImageService,
+            IValidator<CreateBookingCommand> validator)
         {
             _eventRepository = eventRepository;
             _bookingRepository = bookingRepository;
             _ticketRepository = ticketRepository;
+            _ticketImageService = ticketImageService;
             _validator = validator;
         }
 
@@ -34,21 +39,16 @@ namespace TicketBox.Application.Features.Mediator.Bookings.Handlers
                 throw new ValidationException(validationResult.Errors);
             }
 
-
-            //Event var mý
             var eventEntity = await _eventRepository.GetByIdAsync(request.EventId);
             if (eventEntity == null)
             {
-                throw new Exception("Etkinlik bulunamadý");
+                throw new Exception("Etkinlik bulunamad?");
             }
 
-
-            //Kontenjan yeterli mi
             if (eventEntity.Capacity < request.Quantity)
             {
                 throw new Exception("Yetersiz kontenjan");
             }
-
 
             var booking = new Booking
             {
@@ -61,12 +61,13 @@ namespace TicketBox.Application.Features.Mediator.Bookings.Handlers
 
             await _bookingRepository.CreateAsync(booking);
 
-
-            //Event'in kalan kapasitesini düþür
             eventEntity.Capacity -= request.Quantity;
             await _eventRepository.UpdateAsync(eventEntity);
 
-            //Quantity kadar Ticket üret
+            var webRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            var culture = new CultureInfo("tr-TR");
+            var userName = string.IsNullOrWhiteSpace(request.UserName) ? "Misafir" : request.UserName;
+
             for (int i = 0; i < request.Quantity; i++)
             {
                 var ticket = new Ticket
@@ -78,7 +79,20 @@ namespace TicketBox.Application.Features.Mediator.Bookings.Handlers
                 };
 
                 await _ticketRepository.CreateAsync(ticket);
+
+                var imageData = new TicketImageData
+                {
+                    Pnr = ticket.PNR,
+                    EventTitle = eventEntity.Title,
+                    EventDate = eventEntity.EventDate.ToString("dd MMMM yyyy, HH:mm", culture),
+                    Location = eventEntity.Location,
+                    UserName = userName
+                };
+
+                ticket.ImageUrl = _ticketImageService.SaveTicketImage(imageData, webRootPath);
+                await _ticketRepository.UpdateAsync(ticket);
             }
+
             return booking.BookingId;
         }
 

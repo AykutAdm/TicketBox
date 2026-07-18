@@ -16,5 +16,6 @@ namespace TicketBox.Domain.Entities
         public string PNR { get; set; }
         public DateTime PurchaseDate { get; set; }
         public decimal Price { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }

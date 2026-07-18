@@ -59,5 +59,10 @@ namespace TicketBox.Persistence.Repositories
             var query = SpecificationEvaluator.GetQuery(_context.Events.AsQueryable(), spec);
             return await query.ToListAsync();
         }
+
+        public async Task<List<Event>> GetFeaturedEvents()
+        {
+            return await _context.Events.Include(x => x.Category).Where(y => y.IsFeatured == true).ToListAsync();
+        }
     }
 }

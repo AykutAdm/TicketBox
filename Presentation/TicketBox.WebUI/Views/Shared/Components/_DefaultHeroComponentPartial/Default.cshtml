@@ -1,0 +1,41 @@
+﻿@model List<ResultHeroSliderDto>
+
+<section class="hero" aria-label="Öne çıkan etkinlikler">
+    <div class="slider">
+
+        @{
+            var slideIndex = 0;
+        }
+        @foreach (var item in Model)
+        {
+            <div class="slide@(slideIndex == 0 ? " active" : "")">
+                <div class="slide-media">
+                    <img src="@item.ImageUrl" alt="@item.Title" loading="eager" decoding="async">
+                </div>
+                <div class="slide-copy">
+                    <span class="eyebrow">@item.SubTitle</span>
+                    <h1><em>@item.Title</em></h1>
+                    <p>@item.Description</p>
+                    <div class="cta-row">
+                        <a href="#" class="btn btn-primary btn-lg">Etkinlikleri Keşfet</a>
+                        <a href="#" class="btn btn-ghost btn-lg">Nasıl Çalışır?</a>
+                    </div>
+                </div>
+            </div>
+            { slideIndex++; }
+        }
+
+
+        <div class="slider-controls">
+            <div class="slider-dots"></div>
+            <div class="slider-arrows">
+                <button class="slider-arrow slider-arrow--prev glass" aria-label="Önceki slayt">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6" /></svg>
+                </button>
+                <button class="slider-arrow slider-arrow--next glass" aria-label="Sonraki slayt">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6" /></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
