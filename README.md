@@ -1,6 +1,6 @@
 # TicketBox 🎟️
 
-TicketBox; kullanıcıların etkinlikleri keşfedebildiği, filtreleyebildiği, bilet rezervasyonu oluşturabildiği ve yapay zekâ destekli asistan ile kendine uygun etkinliği bulabildiği modern bir bilet satış platformudur.
+TicketBox kullanıcıların etkinlikleri keşfedebildiği, filtreleyebildiği, bilet rezervasyonu oluşturabildiği ve yapay zeka destekli asistan ile kendine uygun etkinliği bulabildiği modern bir bilet satış platformudur.
 
 Proje, sürdürülebilir ve test edilebilir bir yapı hedefiyle **Onion Architecture** yaklaşımıyla geliştirilmiştir. Arayüz, API, iş kuralları, veri erişimi ve dış servis entegrasyonları birbirinden ayrıştırılmıştır.
 
@@ -31,10 +31,10 @@ Proje, sürdürülebilir ve test edilebilir bir yapı hedefiyle **Onion Architec
 
 TicketBox yalnızca etkinlik listeleyen bir bilet sistemi değildir. Kullanıcının etkinlik seçme sürecini kolaylaştırmayı hedefler.
 
-Platformdaki yapay zekâ asistanı:
+Platformdaki yapay zeka asistanı:
 
 - Kullanıcının belirttiği ruh haline göre öneri üretir.
-- Önerilerini veritabanındaki gerçek etkinlik listesiyle sınırlar; sistemde olmayan etkinlikleri önermemesi için yönlendirilmiştir.
+- Önerilerini veritabanındaki gerçek etkinlik listesiyle sınırlar, sistemde olmayan etkinlikleri önermemesi için yönlendirilmiştir.
 - Kullanıcı belirli bir etkinliği seçtiğinde, Tavily Search API ile o etkinlik hakkında güncel web bilgisi alabilir.
 - Etkinlik öncesi kısa öneriler ve bağlama uygun bilgiler sunar.
 - SignalR altyapısı sayesinde klasik sayfa yenileme gerektirmeden gerçek zamanlı sohbet deneyimi sağlar.
@@ -65,7 +65,7 @@ Bu yaklaşım, TicketBox'ı yalnızca “bilet satın alma” odaklı platformla
 - **SkiaSharp**
 - **Newtonsoft.Json**
 
-### Yapay Zekâ ve Harici Servisler
+### Yapay Zeka ve Harici Servisler
 
 - **Anthropic Claude API**  
   Sohbet asistanının kullanıcı mesajlarını yanıtlaması ve etkinlik önerileri üretmesi için kullanılır.
@@ -82,8 +82,7 @@ Bu yaklaşım, TicketBox'ı yalnızca “bilet satın alma” odaklı platformla
 - JavaScript
 - HTML5 / CSS3
 - SignalR JavaScript Client
-- Responsive kullanıcı paneli
-- Dinamik chatbot bileşeni
+- Dinamik chatbot
 
 ---
 
