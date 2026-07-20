@@ -1,0 +1,92 @@
+@model List<ResultEventDto>
+@{
+    ViewData["Title"] = "Etkinlik Ara";
+    Layout = "~/Areas/User/Views/Shared/_UserLayout.cshtml";
+    var categories = ViewBag.Categories as List<ResultCategoryDto> ?? new List<ResultCategoryDto>();
+}
+
+<section class="user-events">
+    <div class="user-search glass-panel">
+        <form method="get" class="user-search__form">
+            <div class="user-search__field">
+                <label for="title">Etkinlik adı</label>
+                <input id="title" name="title" type="text" value="@ViewBag.TitleFilter" placeholder="Konser, tiyatro, seminer…">
+            </div>
+            <div class="user-search__field">
+                <label for="categoryId">Kategori</label>
+                <select id="categoryId" name="categoryId">
+                    <option value="">Tümü</option>
+                    @foreach (var cat in categories)
+                    {
+                        <option value="@cat.CategoryId" selected="@(ViewBag.CategoryId == cat.CategoryId)">
+                            @cat.CategoryName
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="user-search__field">
+                <label for="minPrice">Min fiyat</label>
+                <input id="minPrice" name="minPrice" type="number" min="0" step="1" value="@ViewBag.MinPrice" placeholder="0">
+            </div>
+            <div class="user-search__field">
+                <label for="maxPrice">Max fiyat</label>
+                <input id="maxPrice" name="maxPrice" type="number" min="0" step="1" value="@ViewBag.MaxPrice" placeholder="1000">
+            </div>
+            <button type="submit" class="btn btn-primary">Ara</button>
+        </form>
+    </div>
+
+    <div class="user-events__head glass-panel">
+        <div>
+            <span class="eyebrow">Arama</span>
+            <h2 class="user-events__title">Sonuçlar</h2>
+            <p class="user-events__subtitle">@Model.Count etkinlik bulundu.</p>
+        </div>
+    </div>
+
+    @if (Model.Count == 0)
+    {
+        <div class="user-search__empty glass-panel">
+            <p>Arama kriterlerine uygun etkinlik bulunamadı.</p>
+        </div>
+    }
+    else
+    {
+        <div class="user-events__grid">
+            @foreach (var item in Model)
+            {
+                <article class="user-event-card glass-panel">
+                    <a href="/User/Event/EventDetail/@item.EventId" class="user-event-card__poster">
+                        <img src="@item.ImageUrl" alt="@item.Title" loading="lazy">
+                        <div class="user-event-card__tags">
+                            <span class="user-event-card__badge">@item.CategoryName</span>
+                        </div>
+                    </a>
+                    <div class="user-event-card__body">
+                        <h3 class="user-event-card__title">
+                            <a href="/User/Event/EventDetail/@item.EventId">@item.Title</a>
+                        </h3>
+                        <p class="user-event-card__desc">@item.Description</p>
+                        <div class="user-event-card__meta">
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" /><path d="M16 2v4M8 2v4M3 10h18" /></svg>
+                                @item.EventDate.ToString("dd MMM yyyy", new System.Globalization.CultureInfo("tr-TR"))
+                            </span>
+                            <span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="3" /></svg>
+                                @item.Location
+                            </span>
+                        </div>
+                        <div class="user-event-card__footer">
+                            <div class="user-event-card__price">
+                                <small>Başlangıç</small>
+                                <strong>@item.Price.ToString("N0")₺</strong>
+                            </div>
+                            <a href="/User/Event/EventDetail/@item.EventId" class="btn btn-primary">Detay</a>
+                        </div>
+                    </div>
+                </article>
+            }
+        </div>
+    }
+</section>

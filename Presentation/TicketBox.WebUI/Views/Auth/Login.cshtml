@@ -81,6 +81,7 @@
                 <p class="sub">Hesabına giriş yap ve biletlerini yönet.</p>
 
                 <form method="post">
+                    <input type="hidden" asp-for="ReturnUrl">
                     <div class="field">
                         <label for="email">E-posta</label>
                         <input id="email" asp-for="Email" type="email" placeholder="ornek@email.com" autocomplete="email" required>

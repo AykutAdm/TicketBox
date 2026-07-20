@@ -12,33 +12,6 @@
         <!-- Hero Slider -->
         @await Component.InvokeAsync("_DefaultHeroComponentPartial")
 
-        <!-- Search -->
-        <section class="home-search glass-panel" aria-label="Etkinlik ara">
-            <form class="search-pill" action="#" method="get">
-                <div class="search-field">
-                    <label for="q">Etkinlik veya sanatçı</label>
-                    <input id="q" name="q" type="text" placeholder="Konser, festival, tiyatro…">
-                </div>
-                <div class="search-field">
-                    <label for="city">Şehir</label>
-                    <select id="city" name="city">
-                        <option value="">Tüm şehirler</option>
-                        <option value="istanbul">İstanbul</option>
-                        <option value="ankara">Ankara</option>
-                        <option value="izmir">İzmir</option>
-                        <option value="antalya">Antalya</option>
-                    </select>
-                </div>
-                <div class="search-field">
-                    <label for="date">Tarih</label>
-                    <input id="date" name="date" type="date">
-                </div>
-                <button type="submit" class="search-submit" aria-label="Ara">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
-                </button>
-            </form>
-        </section>
-
         <!-- Stats -->
         @await Component.InvokeAsync("_DefaultStatsComponentPartial")
 

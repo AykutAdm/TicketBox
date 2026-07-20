@@ -21,9 +21,7 @@ namespace TicketBox.WebUI.Areas.User.Controllers
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            var token = HttpContext.Session.GetString("JwtToken");
-            var client = _httpClientFactory.CreateClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var client = GetAuthenticatedClient();
             var responseMessage = await client.GetAsync("https://localhost:7171/api/Tickets/my");
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -37,13 +35,22 @@ namespace TicketBox.WebUI.Areas.User.Controllers
         [Route("Download/{id}")]
         public async Task<IActionResult> Download(int id)
         {
-            var token = HttpContext.Session.GetString("JwtToken");
-            var client = _httpClientFactory.CreateClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var client = GetAuthenticatedClient();
             var responseMessage = await client.GetAsync($"https://localhost:7171/api/Tickets/{id}/download");
             var bytes = await responseMessage.Content.ReadAsByteArrayAsync();
             var fileName = responseMessage.Content.Headers.ContentDisposition.FileName.Trim('"');
             return File(bytes, "image/png", fileName);
+        }
+
+        private HttpClient GetAuthenticatedClient()
+        {
+            var client = _httpClientFactory.CreateClient();
+            var token = HttpContext.Session.GetString("JwtToken");
+            if (!string.IsNullOrEmpty(token))
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
+            return client;
         }
     }
 }

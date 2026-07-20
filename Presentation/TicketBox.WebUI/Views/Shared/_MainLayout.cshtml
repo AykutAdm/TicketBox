@@ -34,11 +34,19 @@
 
             <ul class="nav-links">
                 <li><a href="/Default/Index" class="active">Ana Sayfa</a></li>
-                <li><a href="#">Etkinlikler</a></li>
+                <li><a href="/User/Event/Index">Etkinlikler</a></li>
             </ul>
             <div class="nav-actions">
-                <a href="/Auth/Login" class="btn btn-ghost">Giriş Yap</a>
-                <a href="/Auth/Register" class="btn btn-primary">Kayıt Ol</a>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <a href="/User/Dashboard/Index" class="btn btn-ghost">Dashboard</a>
+                    <a href="/Auth/LogOut" class="btn btn-primary">Çıkış</a>
+                }
+                else
+                {
+                    <a href="/Auth/Login" class="btn btn-ghost">Giriş Yap</a>
+                    <a href="/Auth/Register" class="btn btn-primary">Kayıt Ol</a>
+                }
             </div>
 
             <button class="nav-toggle" aria-label="Menü">
@@ -64,14 +72,22 @@
                 <div>
                     <h4>Keşfet</h4>
                     <ul>
-                        <li><a href="#">Etkinlikler</a></li>
+                        <li><a href="/User/Event/Index">Etkinlikler</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4>Hesap</h4>
                     <ul>
-                        <li><a href="/Auth/Login">Giriş Yap</a></li>
-                        <li><a href="/Auth/Register">Kayıt Ol</a></li>
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li><a href="/User/Dashboard/Index">Dashboard</a></li>
+                            <li><a href="/Auth/LogOut">Çıkış</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="/Auth/Login">Giriş Yap</a></li>
+                            <li><a href="/Auth/Register">Kayıt Ol</a></li>
+                        }
                     </ul>
                 </div>
                 <div>

@@ -45,7 +45,7 @@ namespace TicketBox.Application.Features.Mediator.Bookings.Handlers
             var eventEntity = await _eventRepository.GetByIdAsync(request.EventId);
             if (eventEntity == null)
             {
-                throw new Exception("Etkinlik bulunamadý");
+                throw new Exception("Etkinlik bulunamadÄ±");
             }
 
             if (eventEntity.Capacity < request.Quantity)
@@ -96,7 +96,7 @@ namespace TicketBox.Application.Features.Mediator.Bookings.Handlers
 
                 await _ticketRepository.UpdateAsync(ticket);
 
-                await _emailService.SendTicketEmailAsync(request.Email, "Biletiniz Hazýr", "Merhaba, biletiniz ektedir.", Path.Combine(webRootPath, "tickets", ticket.PNR + ".png"));
+                await _emailService.SendTicketEmailAsync(request.Email, "Biletiniz HazÄ±r", "Merhaba, biletiniz ektedir.", Path.Combine(webRootPath, "tickets", ticket.PNR + ".png"));
             }
 
 

@@ -20,9 +20,9 @@ namespace TicketBox.WebUI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl)
         {
-            return View();
+            return View(new LoginDto { ReturnUrl = returnUrl });
         }
 
 
@@ -61,6 +61,9 @@ namespace TicketBox.WebUI.Controllers
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal);
 
+                    if (!string.IsNullOrEmpty(loginDto.ReturnUrl) && Url.IsLocalUrl(loginDto.ReturnUrl))
+                        return Redirect(loginDto.ReturnUrl);
+
                     return RedirectToAction("Index", "Dashboard", new { area = "User" });
                 }
             }
@@ -94,12 +97,12 @@ namespace TicketBox.WebUI.Controllers
 
 
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> LogOut()
         {
             HttpContext.Session.Clear();
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login");
+            return RedirectToAction("Index", "Default");
         }
     }
 }

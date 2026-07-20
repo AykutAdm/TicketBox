@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="~/css/base.css" asp-append-version="true">
     <link rel="stylesheet" href="~/css/components.css" asp-append-version="true">
     <link rel="stylesheet" href="~/css/user.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/chat-widget.css" asp-append-version="true">
 
     @await RenderSectionAsync("Styles", required: false)
 </head>
@@ -46,6 +47,12 @@
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" /></svg>
                     </span>
                     <span class="user-sidebar__text">Etkinlikler</span>
+                </a>
+                <a href="/User/Search/Index" class="user-sidebar__link">
+                    <span class="user-sidebar__icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
+                    </span>
+                    <span class="user-sidebar__text">Ara</span>
                 </a>
                 <a href="/User/Ticket/Index" class="user-sidebar__link">
                     <span class="user-sidebar__icon">
@@ -88,6 +95,7 @@
         </div>
     </div>
 
+
     <div class="user-chatbot" id="user-chatbot">
         <div class="user-chatbot__zone" id="user-chatbot-zone">
             <div class="user-chatbot__bubble" aria-hidden="true">
@@ -98,7 +106,41 @@
                 <canvas id="chatbot-avatar-canvas" width="120" height="120"></canvas>
             </button>
         </div>
+
+        <div class="user-chatbot__panel" id="user-chatbot-panel">
+            <div class="user-chatbot__panel-header">
+                <span>TicketBox Asistan</span>
+                <button type="button" class="user-chatbot__panel-close" id="user-chatbot-close" aria-label="Kapat">&times;</button>
+            </div>
+
+            <div class="user-chatbot__event-picker">
+                <label for="user-chatbot-event-select">Etkinlik hakkında sor (opsiyonel)</label>
+                <select id="user-chatbot-event-select">
+                    <option value="">Genel soru</option>
+                </select>
+            </div>
+
+            <div class="user-chatbot__moods">
+                <button type="button" class="mood-chip" data-mood="mutlu">😄 Mutlu</button>
+                <button type="button" class="mood-chip" data-mood="sakin">😌 Sakin</button>
+                <button type="button" class="mood-chip" data-mood="enerjik">⚡ Enerjik</button>
+                <button type="button" class="mood-chip" data-mood="hüzünlü">😔 Hüzünlü</button>
+            </div>
+
+            <div class="user-chatbot__messages" id="user-chatbot-messages">
+                <div class="chat-msg chat-msg--bot">Merhaba! Bugün nasıl hissediyorsun? Ruh haline göre sana etkinlik önerebilirim 🎟️</div>
+            </div>
+
+            <form class="user-chatbot__input-row" id="user-chatbot-form">
+                <input type="text" id="user-chatbot-input" placeholder="Bir şeyler yaz..." autocomplete="off">
+                <button type="submit" aria-label="Gönder">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z" /></svg>
+                </button>
+            </form>
+        </div>
     </div>
+
+
 
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/background.js" asp-append-version="true"></script>
@@ -126,7 +168,12 @@
             });
         })();
     </script>
+    <script>
+        window.__ticketBoxToken = '@(Context.Session.GetString("JwtToken") ?? "")';
+    </script>
     <script src="~/js/chatbot-avatar.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@microsoft/signalr@8.0.0/dist/browser/signalr.min.js"></script>
+    <script src="~/js/chat-widget.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

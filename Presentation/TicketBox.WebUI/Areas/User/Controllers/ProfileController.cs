@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using TicketBox.WebUI.DTOs.UserDtos;
 
 namespace TicketBox.WebUI.Areas.User.Controllers
 {
     [Area("User")]
+    [Authorize]
     [Route("User/Profile")]
     public class ProfileController : Controller
     {
@@ -17,14 +18,10 @@ namespace TicketBox.WebUI.Areas.User.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            var token = HttpContext.Session.GetString("JwtToken");
-            var client = _httpClientFactory.CreateClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
+            var client = GetAuthenticatedClient();
             var responseMessage = await client.GetAsync("https://localhost:7171/api/Users/me");
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -33,6 +30,17 @@ namespace TicketBox.WebUI.Areas.User.Controllers
                 return View(values);
             }
             return View();
+        }
+
+        private HttpClient GetAuthenticatedClient()
+        {
+            var client = _httpClientFactory.CreateClient();
+            var token = HttpContext.Session.GetString("JwtToken");
+            if (!string.IsNullOrEmpty(token))
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
+            return client;
         }
     }
 }

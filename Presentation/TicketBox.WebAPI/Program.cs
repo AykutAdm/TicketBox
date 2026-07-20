@@ -13,15 +13,32 @@ using TicketBox.Application.Interfaces.Services;
 using TicketBox.Application.Mappings;
 using TicketBox.Domain.Entities;
 using TicketBox.Infrastructure.Auth;
+using TicketBox.Infrastructure.Chatbot;
 using TicketBox.Infrastructure.Email;
 using TicketBox.Infrastructure.ImageGeneration;
 using TicketBox.Persistence.Context;
 using TicketBox.Persistence.Repositories;
+using TicketBox.WebAPI.Hubs;
 using TicketBox.WebAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddHttpClient();
+
+builder.Services.AddSignalR();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("TicketBox", policy =>
+    {
+        policy.WithOrigins("https://localhost:7006")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
+
 
 //Identity
 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
@@ -84,6 +101,8 @@ builder.Services.AddScoped<IUserDashboardRepository, UserDashboardRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<ITicketImageService, TicketImageService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IClaudeChatService, ClaudeChatService>();
+builder.Services.AddScoped<ITavilySearchService, TavilySearchService>();
 
 //CQRS
 builder.Services.AddScoped<GetCategoryQueryHandler>();
@@ -120,10 +139,14 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
+app.UseCors("TicketBox");
+
 app.UseAuthentication();
 
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<ChatHub>("/chatHub");
 
 app.Run();

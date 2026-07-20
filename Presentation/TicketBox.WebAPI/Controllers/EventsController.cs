@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TicketBox.Application.Features.Mediator.Events.Commands;
@@ -17,6 +18,7 @@ namespace TicketBox.WebAPI.Controllers
             _mediator = mediator;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAllEvents()
         {
@@ -24,6 +26,7 @@ namespace TicketBox.WebAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEventById(int id)
         {
@@ -61,6 +64,7 @@ namespace TicketBox.WebAPI.Controllers
             return Ok(result);
         }
 
+        [Authorize]
         [HttpGet("search")]
         public async Task<IActionResult> Search([FromQuery] int? categoryId, [FromQuery] string? title, [FromQuery] decimal? minPrice, [FromQuery] decimal? maxPrice)
         {

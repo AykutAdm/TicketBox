@@ -2462,3 +2462,52 @@ body.user-page .user-shell h3 {
         display: none;
     }
 }
+
+.user-search {
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.user-search__form {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr auto;
+    gap: 12px;
+    align-items: end;
+}
+
+.user-search__field label {
+    display: block;
+    font-size: .75rem;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+
+.user-search__field input,
+.user-search__field select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--mist);
+    font-size: .87rem;
+    outline: none;
+}
+
+.user-search__empty {
+    padding: 28px;
+    text-align: center;
+    color: var(--muted);
+}
+
+@media (max-width: 900px) {
+    .user-search__form {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 560px) {
+    .user-search__form {
+        grid-template-columns: 1fr;
+    }
+}

@@ -9,6 +9,7 @@ using TicketBox.WebUI.DTOs.EventDtos;
 namespace TicketBox.WebUI.Areas.User.Controllers
 {
     [Area("User")]
+    [Authorize]
     [Route("User/Event")]
     public class EventController : Controller
     {
@@ -19,12 +20,11 @@ namespace TicketBox.WebUI.Areas.User.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-        [Authorize]
         [HttpGet]
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = GetAuthenticatedClient();
             var responseMessage = await client.GetAsync("https://localhost:7171/api/Events");
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -35,12 +35,11 @@ namespace TicketBox.WebUI.Areas.User.Controllers
             return View();
         }
 
-        [Authorize]
         [HttpGet]
         [Route("EventDetail/{id}")]
         public async Task<IActionResult> EventDetail(int id)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = GetAuthenticatedClient();
             var responseMessage = await client.GetAsync($"https://localhost:7171/api/Events/{id}");
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -51,15 +50,11 @@ namespace TicketBox.WebUI.Areas.User.Controllers
             return View();
         }
 
-        [Authorize]
         [HttpPost]
         [Route("BuyTicket")]
         public async Task<IActionResult> BuyTicket(CreateBookingDto dto)
         {
-            var token = HttpContext.Session.GetString("JwtToken");
-            var client = _httpClientFactory.CreateClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
+            var client = GetAuthenticatedClient();
             var jsonData = JsonConvert.SerializeObject(dto);
             var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
             var responseMessage = await client.PostAsync("https://localhost:7171/api/Bookings", content);
@@ -69,6 +64,17 @@ namespace TicketBox.WebUI.Areas.User.Controllers
 
             TempData["Error"] = "Bilet alınamadı. Lütfen tekrar deneyin.";
             return RedirectToAction("EventDetail", new { id = dto.EventId });
+        }
+
+        private HttpClient GetAuthenticatedClient()
+        {
+            var client = _httpClientFactory.CreateClient();
+            var token = HttpContext.Session.GetString("JwtToken");
+            if (!string.IsNullOrEmpty(token))
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
+            return client;
         }
     }
 }

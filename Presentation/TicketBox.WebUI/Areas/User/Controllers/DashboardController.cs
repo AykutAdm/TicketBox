@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using TicketBox.WebUI.DTOs.TicketDtos;
@@ -7,6 +8,7 @@ using TicketBox.WebUI.DTOs.UserDtos;
 namespace TicketBox.WebUI.Areas.User.Controllers
 {
     [Area("User")]
+    [Authorize]
     [Route("User/Dashboard")]
     public class DashboardController : Controller
     {
@@ -20,9 +22,7 @@ namespace TicketBox.WebUI.Areas.User.Controllers
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            var token = HttpContext.Session.GetString("JwtToken");
-            var client = _httpClientFactory.CreateClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var client = GetAuthenticatedClient();
 
             var page = new UserDashboardPageDto
             {
@@ -50,6 +50,17 @@ namespace TicketBox.WebUI.Areas.User.Controllers
             }
 
             return View(page);
+        }
+
+        private HttpClient GetAuthenticatedClient()
+        {
+            var client = _httpClientFactory.CreateClient();
+            var token = HttpContext.Session.GetString("JwtToken");
+            if (!string.IsNullOrEmpty(token))
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
+            return client;
         }
     }
 }
