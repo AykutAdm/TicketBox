@@ -4,10 +4,8 @@ TicketBox; kullanıcıların etkinlikleri keşfedebildiği, filtreleyebildiği, 
 
 Proje, sürdürülebilir ve test edilebilir bir yapı hedefiyle **Onion Architecture** yaklaşımıyla geliştirilmiştir. Arayüz, API, iş kuralları, veri erişimi ve dış servis entegrasyonları birbirinden ayrıştırılmıştır.
 
-![TicketBox Demo](docs/demo.gif) 
-
 <p align="center">
-  <img src="docs/home.gif" alt="Home" />
+  <img src="docs/demo.gif" alt="Home" />
 </p>
 
 ## Öne Çıkan Özellikler
