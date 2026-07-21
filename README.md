@@ -209,6 +209,4 @@ TicketBox.sln
 
 ---
 
-## Lisans
-
 Bu proje eğitim amaçlı geliştirilmiştir.
